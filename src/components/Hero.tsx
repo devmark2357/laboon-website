@@ -1,6 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { StoreButtons } from './StoreButtons';
@@ -9,41 +10,33 @@ export function Hero() {
   const t = useTranslations('hero');
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-gradient-hero bg-grid-pattern">
-      {/* TODO: 메인 키비주얼 이미지 또는 영상으로 교체 */}
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10" />
-      <div className="absolute inset-0 bg-noise" />
-
-      {/* 기하학적 라인 패턴 */}
-      <div className="absolute inset-0 opacity-20">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern
-              id="lines"
-              width="100"
-              height="100"
-              patternUnits="userSpaceOnUse"
-            >
-              <path
-                d="M 0 50 L 100 50"
-                stroke="url(#lineGradient)"
-                strokeWidth="0.5"
-                fill="none"
-              />
-              <path
-                d="M 50 0 L 50 100"
-                stroke="url(#lineGradient)"
-                strokeWidth="0.5"
-                fill="none"
-              />
-            </pattern>
-            <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#8B5CF6" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="#C084FC" stopOpacity="0.1" />
-            </linearGradient>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#lines)" />
-        </svg>
+    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
+      {/* 배경 이미지 */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/hero-bg.png"
+          alt=""
+          fill
+          className="object-cover"
+          priority
+          sizes="100vw"
+        />
+        {/* 데스크톱: 왼쪽 어둡게(텍스트 가독성), 오른쪽 투명(캐릭터 노출) */}
+        <div
+          className="absolute inset-0 hidden md:block"
+          style={{
+            background:
+              'linear-gradient(to right, rgba(10, 10, 15, 0.95) 0%, rgba(10, 10, 15, 0.7) 40%, rgba(10, 10, 15, 0.3) 70%, transparent 100%)',
+          }}
+        />
+        {/* 모바일: 전체적으로 더 어두운 오버레이 (텍스트 가독성) */}
+        <div
+          className="absolute inset-0 md:hidden"
+          style={{
+            background:
+              'linear-gradient(to bottom, rgba(10, 10, 15, 0.85) 0%, rgba(10, 10, 15, 0.75) 50%, rgba(10, 10, 15, 0.9) 100%)',
+          }}
+        />
       </div>
 
       <div className="relative z-10 container mx-auto px-4 md:px-6 pt-24 pb-16">
@@ -51,7 +44,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-4xl"
+          className="max-w-4xl lg:max-w-[50%] text-left"
         >
           <p className="text-accent-light text-sm font-medium tracking-widest uppercase mb-4">
             {t('tagline')}
@@ -75,12 +68,12 @@ export function Hero() {
           </p>
         </motion.div>
 
-        {/* 스토어 배지 */}
+        {/* 스토어 배지 - 왼쪽 하단 */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          className="absolute bottom-24 right-4 md:right-8 lg:right-16"
+          className="absolute bottom-24 left-4 md:left-6 lg:left-8"
         >
           <StoreButtons variant="default" />
         </motion.div>
