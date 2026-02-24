@@ -21,9 +21,25 @@ export function Hero() {
           priority
           sizes="100vw"
         />
-        {/* 캐릭터 주변 퍼플 글로우 (오른쪽 영역, 펄스 애니메이션) */}
+        {/* 데스크톱: 왼쪽 어둡게(텍스트 가독성), 오른쪽 투명(캐릭터 노출) */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 hidden md:block"
+          style={{
+            background:
+              'linear-gradient(to right, rgba(10, 10, 15, 0.95) 0%, rgba(10, 10, 15, 0.7) 40%, rgba(10, 10, 15, 0.3) 70%, transparent 100%)',
+          }}
+        />
+        {/* 모바일: 전체적으로 더 어두운 오버레이 (텍스트 가독성) */}
+        <div
+          className="absolute inset-0 md:hidden"
+          style={{
+            background:
+              'linear-gradient(to bottom, rgba(10, 10, 15, 0.85) 0%, rgba(10, 10, 15, 0.75) 50%, rgba(10, 10, 15, 0.9) 100%)',
+          }}
+        />
+        {/* 캐릭터 주변 퍼플 글로우 (오른쪽 영역, 펄스 애니메이션) - 오버레이 위에 표시 */}
+        <div
+          className="absolute inset-0 pointer-events-none z-[1]"
           style={{ willChange: 'transform' }}
         >
           <div
@@ -37,7 +53,7 @@ export function Hero() {
           />
         </div>
         {/* 떠다니는 파티클 효과 (캐릭터 주변) */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]">
           <div
             className="absolute right-[15%] top-[35%] w-2 h-2 rounded-full bg-accent/60 blur-[4px]"
             style={{
@@ -83,22 +99,6 @@ export function Hero() {
             opacity: 0.3,
             animation: 'hero-bottom-glow-blink 2.5s ease-in-out infinite',
             willChange: 'opacity',
-          }}
-        />
-        {/* 데스크톱: 왼쪽 어둡게(텍스트 가독성), 오른쪽 투명(캐릭터 노출) */}
-        <div
-          className="absolute inset-0 hidden md:block"
-          style={{
-            background:
-              'linear-gradient(to right, rgba(10, 10, 15, 0.95) 0%, rgba(10, 10, 15, 0.7) 40%, rgba(10, 10, 15, 0.3) 70%, transparent 100%)',
-          }}
-        />
-        {/* 모바일: 전체적으로 더 어두운 오버레이 (텍스트 가독성) */}
-        <div
-          className="absolute inset-0 md:hidden"
-          style={{
-            background:
-              'linear-gradient(to bottom, rgba(10, 10, 15, 0.85) 0%, rgba(10, 10, 15, 0.75) 50%, rgba(10, 10, 15, 0.9) 100%)',
           }}
         />
       </div>

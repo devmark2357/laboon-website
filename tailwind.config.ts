@@ -26,7 +26,8 @@ const config: Config = {
       },
       fontFamily: {
         heading: ['var(--font-syne)', 'sans-serif'],
-        body: ['var(--font-pretendard)', 'sans-serif'],
+        sans: ['Pretendard', 'sans-serif'],
+        body: ['Pretendard', 'sans-serif'],
       },
       backgroundImage: {
         'gradient-accent': 'linear-gradient(135deg, #7C3AED 0%, #C084FC 100%)',

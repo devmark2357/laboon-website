@@ -28,12 +28,9 @@ export function CTA() {
           transition={{ duration: 0.6 }}
           className="max-w-2xl mx-auto text-center"
         >
-          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-text mb-4">
+          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-text mb-12">
             {t('title')}
           </h2>
-          <p className="text-accent-light text-lg mb-12">
-            {t('comingSoon')}
-          </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
             <input
