@@ -1,0 +1,103 @@
+{
+  "nav": {
+    "logo": "LABOON",
+    "about": "About",
+    "features": "Features",
+    "roadmap": "Roadmap",
+    "comingSoon": "Coming Soon"
+  },
+  "hero": {
+    "tagline": "AI x Real Fan Economy Platform",
+    "title": "REALMATE",
+    "subtitle": "AI 캐릭터와 진짜 팬덤이 만나는 곳",
+    "description": "실존 인플루언서 기반 AI 캐릭터와 대화하고, 관계를 쌓고, 특별한 콘텐츠를 경험하세요."
+  },
+  "trailer": {
+    "title": "트레일러"
+  },
+  "about": {
+    "title": "REALMATE란?",
+    "intro": "REALMATE는 실존 인물의 정체성, 성격, 감정 데이터를 기반으로 AI 캐릭터를 생성하고, 유저와의 지속적인 관계를 통해 구독과 인앱 결제가 자연스럽게 발생하는 AI 기반 팬 이코노미 플랫폼입니다.",
+    "cards": {
+      "ai24": {
+        "title": "성향 반영한 AI 캐릭터가 24/7 활동",
+        "description": "인터뷰 데이터로 학습한 AI 캐릭터가 콘텐츠를 생산하고 팬과 소통합니다."
+      },
+      "relationship": {
+        "title": "대화로 쌓이는 진짜 관계",
+        "description": "호감도 시스템을 통해 관계가 발전하고, 단계별로 특별한 콘텐츠가 해금됩니다."
+      },
+      "economy": {
+        "title": "팬 기반의 지속 가능한 수익 구조",
+        "description": "구독, 선물, 디지털 화보 등 팬덤이 만드는 새로운 크리에이터 이코노미."
+      }
+    }
+  },
+  "howItWorks": {
+    "title": "이용 방법",
+    "steps": {
+      "01": {
+        "title": "상대 선택",
+        "description": "마음에 드는 AI 캐릭터를 선택하세요"
+      },
+      "02": {
+        "title": "이벤트 발생",
+        "description": "특별한 이벤트가 발생하고 대화가 시작됩니다"
+      },
+      "03": {
+        "title": "대화 진행",
+        "description": "대화를 통해 호감도를 쌓아가세요"
+      },
+      "04": {
+        "title": "콘텐츠 해금",
+        "description": "관계 단계에 따라 전용 콘텐츠가 해금됩니다"
+      },
+      "05": {
+        "title": "구독",
+        "description": "프리미엄 구독으로 더 많은 혜택을 누리세요"
+      },
+      "06": {
+        "title": "선물하기",
+        "description": "선물을 보내고 특별한 아이템을 수집하세요"
+      }
+    }
+  },
+  "roadmap": {
+    "title": "로드맵",
+    "items": {
+      "q1": {
+        "period": "2026 Q1",
+        "label": "출시 / Launch",
+        "description": "개발 완료 및 한국 출시 · 인플루언서 5명 파트너십",
+        "now": "NOW"
+      },
+      "q2": {
+        "period": "2026 Q2",
+        "label": "확장 / Expand",
+        "description": "에이전시 협업 및 글로벌 출시 · 인플루언서 20명"
+      },
+      "q3": {
+        "period": "2026 Q3",
+        "label": "진화 / Evolve",
+        "description": "남성 AI 캐릭터 업데이트 · 플랫폼 단위 협업"
+      },
+      "q4": {
+        "period": "2027 Q1",
+        "label": "스케일 / Scale",
+        "description": "대규모 마케팅 · 인플루언서 50명+ · 풀 에코시스템"
+      }
+    }
+  },
+  "cta": {
+    "title": "나만의 AI 파트너를 만나볼 준비 되셨나요?",
+    "subtitle": "REALMATE · 2026년 3월 출시",
+    "emailPlaceholder": "이메일을 입력하세요",
+    "button": "알림 받기"
+  },
+  "footer": {
+    "logo": "LABOON",
+    "copyright": "© 2026 LABOON. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  }
+}

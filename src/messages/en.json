@@ -1,0 +1,103 @@
+{
+  "nav": {
+    "logo": "LABOON",
+    "about": "About",
+    "features": "Features",
+    "roadmap": "Roadmap",
+    "comingSoon": "Coming Soon"
+  },
+  "hero": {
+    "tagline": "AI x Real Fan Economy Platform",
+    "title": "REALMATE",
+    "subtitle": "Where AI Characters Meet Real Fandom",
+    "description": "Chat with AI characters based on real influencers. Build relationships. Experience exclusive content."
+  },
+  "trailer": {
+    "title": "Watch Trailer"
+  },
+  "about": {
+    "title": "What is REALMATE?",
+    "intro": "REALMATE creates AI characters from real influencers' identity, personality, and emotional data — building an AI-powered fan economy through authentic, evolving relationships.",
+    "cards": {
+      "ai24": {
+        "title": "AI Characters Active 24/7",
+        "description": "Trained on real interview data, AI characters create content and engage with fans around the clock."
+      },
+      "relationship": {
+        "title": "Relationships That Grow",
+        "description": "Build affinity through conversations. Unlock exclusive content as your relationship deepens."
+      },
+      "economy": {
+        "title": "Sustainable Fan Economy",
+        "description": "Subscriptions, gifts, digital photo cards — a new creator economy powered by fandom."
+      }
+    }
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "steps": {
+      "01": {
+        "title": "Choose",
+        "description": "Pick your favorite AI character"
+      },
+      "02": {
+        "title": "Connect",
+        "description": "Trigger events and start chatting"
+      },
+      "03": {
+        "title": "Bond",
+        "description": "Deepen your relationship through conversations"
+      },
+      "04": {
+        "title": "Unlock",
+        "description": "Access exclusive digital content"
+      },
+      "05": {
+        "title": "Subscribe",
+        "description": "Get premium features and daily rewards"
+      },
+      "06": {
+        "title": "Gift",
+        "description": "Send gifts and collect items"
+      }
+    }
+  },
+  "roadmap": {
+    "title": "Roadmap",
+    "items": {
+      "q1": {
+        "period": "2026 Q1",
+        "label": "Launch",
+        "description": "Development complete & Korea launch · 5 influencer partners",
+        "now": "NOW"
+      },
+      "q2": {
+        "period": "2026 Q2",
+        "label": "Expand",
+        "description": "Agency partnerships & global launch · 20 influencer partners"
+      },
+      "q3": {
+        "period": "2026 Q3",
+        "label": "Evolve",
+        "description": "Male AI character update · Platform-level collaborations"
+      },
+      "q4": {
+        "period": "2027 Q1",
+        "label": "Scale",
+        "description": "Large-scale marketing · 50+ influencers · Full ecosystem"
+      }
+    }
+  },
+  "cta": {
+    "title": "Ready to meet your AI companion?",
+    "subtitle": "REALMATE · Launching March 2026",
+    "emailPlaceholder": "Enter your email",
+    "button": "Notify Me"
+  },
+  "footer": {
+    "logo": "LABOON",
+    "copyright": "© 2026 LABOON. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  }
+}
