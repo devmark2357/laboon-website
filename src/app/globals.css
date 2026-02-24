@@ -53,18 +53,18 @@
 }
 
 /* Hero 효과 애니메이션 */
-@keyframes pulse-glow {
+@keyframes pulseGlow {
   0%, 100% {
     opacity: 0.15;
     transform: scale(1);
   }
   50% {
-    opacity: 0.3;
+    opacity: 0.35;
     transform: scale(1.05);
   }
 }
 
-@keyframes float-1 {
+@keyframes floatOne {
   0%, 100% {
     transform: translateY(0px);
     opacity: 0.6;
@@ -75,7 +75,7 @@
   }
 }
 
-@keyframes float-2 {
+@keyframes floatTwo {
   0%, 100% {
     transform: translateY(0px);
     opacity: 0.5;
@@ -86,7 +86,7 @@
   }
 }
 
-@keyframes float-3 {
+@keyframes floatThree {
   0%, 100% {
     transform: translateY(0px);
     opacity: 0.4;
@@ -95,22 +95,6 @@
     transform: translateY(-15px);
     opacity: 0.8;
   }
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
-}
-
-.animate-float-1 {
-  animation: float-1 4s ease-in-out infinite;
-}
-
-.animate-float-2 {
-  animation: float-2 5s ease-in-out infinite;
-}
-
-.animate-float-3 {
-  animation: float-3 3.5s ease-in-out infinite;
 }
 
 @keyframes hero-bottom-glow-blink {

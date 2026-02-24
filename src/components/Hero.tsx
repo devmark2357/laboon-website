@@ -21,6 +21,39 @@ export function Hero() {
           priority
           sizes="100vw"
         />
+        {/* 퍼플 글로우 오브 */}
+        <div
+          className="absolute top-1/4 right-1/4 w-[400px] h-[400px] md:w-[500px] md:h-[500px] rounded-full pointer-events-none z-10"
+          style={{
+            background:
+              'radial-gradient(circle, rgba(139,92,246,0.25) 0%, transparent 70%)',
+            animation: 'pulseGlow 3s ease-in-out infinite',
+          }}
+        />
+        {/* 떠다니는 빛 점 1 */}
+        <div
+          className="absolute top-[30%] right-[35%] w-2 h-2 bg-purple-400 rounded-full pointer-events-none z-10"
+          style={{
+            filter: 'blur(3px)',
+            animation: 'floatOne 4s ease-in-out infinite',
+          }}
+        />
+        {/* 떠다니는 빛 점 2 */}
+        <div
+          className="absolute top-[50%] right-[25%] w-1.5 h-1.5 bg-purple-300 rounded-full pointer-events-none z-10"
+          style={{
+            filter: 'blur(3px)',
+            animation: 'floatTwo 5s ease-in-out infinite',
+          }}
+        />
+        {/* 떠다니는 빛 점 3 */}
+        <div
+          className="absolute top-[40%] right-[45%] w-2.5 h-2.5 bg-violet-400 rounded-full pointer-events-none z-10"
+          style={{
+            filter: 'blur(4px)',
+            animation: 'floatThree 3.5s ease-in-out infinite',
+          }}
+        />
         {/* 데스크톱: 왼쪽 어둡게(텍스트 가독성), 오른쪽 투명(캐릭터 노출) */}
         <div
           className="absolute inset-0 hidden md:block"
@@ -37,18 +70,6 @@ export function Hero() {
               'linear-gradient(to bottom, rgba(10, 10, 15, 0.85) 0%, rgba(10, 10, 15, 0.75) 50%, rgba(10, 10, 15, 0.9) 100%)',
           }}
         />
-        {/* (a) 퍼플 글로우 오브 - 캐릭터 뒤쪽 */}
-        <div
-          className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full pointer-events-none animate-pulse-glow"
-          style={{
-            background:
-              'radial-gradient(circle, rgba(139,92,246,0.2) 0%, transparent 70%)',
-          }}
-        />
-        {/* (b) 떠다니는 빛 점들 3개 */}
-        <div className="absolute top-[30%] right-[35%] w-2 h-2 bg-purple-400 rounded-full blur-sm animate-float-1 pointer-events-none" />
-        <div className="absolute top-[50%] right-[25%] w-1.5 h-1.5 bg-purple-300 rounded-full blur-sm animate-float-2 pointer-events-none" />
-        <div className="absolute top-[40%] right-[45%] w-2.5 h-2.5 bg-violet-400 rounded-full blur-md animate-float-3 pointer-events-none" />
         {/* 하단 퍼플 라이트 반사 효과 */}
         <div
           className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
@@ -73,7 +94,7 @@ export function Hero() {
             {t('tagline')}
           </p>
           <h1
-            className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold tracking-[0.15em] uppercase mb-6"
+            className="font-sans font-semibold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl tracking-[0.15em] uppercase mb-6 break-words"
             style={{
               background: 'linear-gradient(135deg, #7C3AED 0%, #C084FC 100%)',
               WebkitBackgroundClip: 'text',
