@@ -80,7 +80,7 @@ export function Hero() {
           className="absolute top-[20%] right-[42%] w-[2px] h-[60%] pointer-events-none z-10"
           style={{
             background:
-              'linear-gradient(to bottom, transparent, rgb(168 85 247), transparent)',
+              'linear-gradient(to bottom, transparent, rgb(168, 85, 247), transparent)',
             animation: 'rimLightPulse 2s ease-in-out infinite',
           }}
         />
