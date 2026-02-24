@@ -55,22 +55,42 @@
 /* Hero 효과 애니메이션 */
 @keyframes pulseGlow {
   0%, 100% {
+    opacity: 0.25;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes pulseGlow2 {
+  0%, 100% {
     opacity: 0.15;
-    transform: scale(1);
+    transform: scale(0.95);
   }
   50% {
     opacity: 0.35;
-    transform: scale(1.05);
+    transform: scale(1.1);
+  }
+}
+
+@keyframes rimLightPulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
   }
 }
 
 @keyframes floatOne {
   0%, 100% {
     transform: translateY(0px);
-    opacity: 0.6;
+    opacity: 0.7;
   }
   50% {
-    transform: translateY(-20px);
+    transform: translateY(-40px);
     opacity: 1;
   }
 }
@@ -78,30 +98,52 @@
 @keyframes floatTwo {
   0%, 100% {
     transform: translateY(0px);
-    opacity: 0.5;
+    opacity: 0.75;
   }
   50% {
-    transform: translateY(-30px);
-    opacity: 0.9;
+    transform: translateY(-50px);
+    opacity: 1;
   }
 }
 
 @keyframes floatThree {
   0%, 100% {
     transform: translateY(0px);
-    opacity: 0.4;
+    opacity: 0.7;
   }
   50% {
-    transform: translateY(-15px);
+    transform: translateY(-35px);
+    opacity: 1;
+  }
+}
+
+@keyframes floatFour {
+  0%, 100% {
+    transform: translateY(0px);
     opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-45px);
+    opacity: 1;
+  }
+}
+
+@keyframes floatFive {
+  0%, 100% {
+    transform: translateY(0px);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translateY(-30px);
+    opacity: 1;
   }
 }
 
 @keyframes hero-bottom-glow-blink {
   0%, 100% {
-    opacity: 0.25;
+    opacity: 0.15;
   }
   50% {
-    opacity: 0.4;
+    opacity: 0.3;
   }
 }

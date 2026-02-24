@@ -21,37 +21,67 @@ export function Hero() {
           priority
           sizes="100vw"
         />
-        {/* 퍼플 글로우 오브 */}
+        {/* 퍼플 글로우 오브 1 - 메인 (크고 강하게) */}
         <div
-          className="absolute top-1/4 right-1/4 w-[400px] h-[400px] md:w-[500px] md:h-[500px] rounded-full pointer-events-none z-10"
+          className="absolute top-1/4 right-1/4 w-[600px] h-[600px] md:w-[800px] md:h-[800px] rounded-full pointer-events-none z-10"
           style={{
             background:
-              'radial-gradient(circle, rgba(139,92,246,0.25) 0%, transparent 70%)',
+              'radial-gradient(circle, rgba(139,92,246,0.4) 0%, transparent 70%)',
             animation: 'pulseGlow 3s ease-in-out infinite',
           }}
         />
-        {/* 떠다니는 빛 점 1 */}
+        {/* 퍼플 글로우 오브 2 - 라이트 퍼플 (엇갈린 타이밍) */}
         <div
-          className="absolute top-[30%] right-[35%] w-2 h-2 bg-purple-400 rounded-full pointer-events-none z-10"
+          className="absolute top-[35%] right-[20%] w-[400px] h-[400px] rounded-full pointer-events-none z-10"
           style={{
-            filter: 'blur(3px)',
+            background:
+              'radial-gradient(circle, rgba(192,132,252,0.3) 0%, transparent 70%)',
+            animation: 'pulseGlow2 4s ease-in-out infinite 0.5s',
+          }}
+        />
+        {/* 떠다니는 빛 점 5개 - 크고 밝게 */}
+        <div
+          className="absolute top-[28%] right-[38%] w-[8px] h-[8px] bg-purple-400 rounded-full pointer-events-none z-10"
+          style={{
+            filter: 'blur(6px)',
             animation: 'floatOne 4s ease-in-out infinite',
           }}
         />
-        {/* 떠다니는 빛 점 2 */}
         <div
-          className="absolute top-[50%] right-[25%] w-1.5 h-1.5 bg-purple-300 rounded-full pointer-events-none z-10"
+          className="absolute top-[48%] right-[22%] w-[14px] h-[14px] bg-purple-300 rounded-full pointer-events-none z-10"
           style={{
-            filter: 'blur(3px)',
-            animation: 'floatTwo 5s ease-in-out infinite',
+            filter: 'blur(10px)',
+            animation: 'floatTwo 5s ease-in-out infinite 0.3s',
           }}
         />
-        {/* 떠다니는 빛 점 3 */}
         <div
-          className="absolute top-[40%] right-[45%] w-2.5 h-2.5 bg-violet-400 rounded-full pointer-events-none z-10"
+          className="absolute top-[38%] right-[48%] w-[10px] h-[10px] bg-violet-400 rounded-full pointer-events-none z-10"
           style={{
-            filter: 'blur(4px)',
-            animation: 'floatThree 3.5s ease-in-out infinite',
+            filter: 'blur(8px)',
+            animation: 'floatThree 3.5s ease-in-out infinite 0.6s',
+          }}
+        />
+        <div
+          className="absolute top-[55%] right-[35%] w-[6px] h-[6px] bg-purple-300 rounded-full pointer-events-none z-10"
+          style={{
+            filter: 'blur(6px)',
+            animation: 'floatFour 4.5s ease-in-out infinite 0.2s',
+          }}
+        />
+        <div
+          className="absolute top-[32%] right-[28%] w-[12px] h-[12px] bg-violet-300 rounded-full pointer-events-none z-10"
+          style={{
+            filter: 'blur(8px)',
+            animation: 'floatFive 3.8s ease-in-out infinite 0.8s',
+          }}
+        />
+        {/* 캐릭터 림 라이트 효과 */}
+        <div
+          className="absolute top-[20%] right-[42%] w-[2px] h-[60%] pointer-events-none z-10"
+          style={{
+            background:
+              'linear-gradient(to bottom, transparent, rgb(168 85 247), transparent)',
+            animation: 'rimLightPulse 2s ease-in-out infinite',
           }}
         />
         {/* 데스크톱: 왼쪽 어둡게(텍스트 가독성), 오른쪽 투명(캐릭터 노출) */}
@@ -70,13 +100,12 @@ export function Hero() {
               'linear-gradient(to bottom, rgba(10, 10, 15, 0.85) 0%, rgba(10, 10, 15, 0.75) 50%, rgba(10, 10, 15, 0.9) 100%)',
           }}
         />
-        {/* 하단 퍼플 라이트 반사 효과 */}
+        {/* 하단 바닥 반사 라이트 */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
+          className="absolute bottom-0 left-0 right-0 h-[20%] min-h-[120px] pointer-events-none z-10"
           style={{
             background:
-              'linear-gradient(to top, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0.1) 30%, transparent 100%)',
-            opacity: 0.3,
+              'linear-gradient(to top, rgba(139,92,246,0.25), transparent)',
             animation: 'hero-bottom-glow-blink 2.5s ease-in-out infinite',
             willChange: 'opacity',
           }}
@@ -101,7 +130,7 @@ export function Hero() {
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
               textShadow:
-                '0 0 40px rgba(139,92,246,0.3), 0 0 80px rgba(139,92,246,0.1)',
+                '0 0 60px rgba(139,92,246,0.5), 0 0 120px rgba(139,92,246,0.2), 0 0 200px rgba(139,92,246,0.1)',
             }}
           >
             {t('title')}
