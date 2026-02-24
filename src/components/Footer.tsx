@@ -1,15 +1,12 @@
 'use client';
 
-import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { StoreButtons } from './StoreButtons';
-import { ComingSoonModal } from './ComingSoonModal';
 import { LEGAL_URLS, SOCIAL_URLS } from '@/lib/constants';
 import { Twitter, Instagram } from 'lucide-react';
 
 export function Footer() {
   const t = useTranslations('footer');
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <footer className="py-12 md:py-16 bg-surface border-t border-white/5">
@@ -22,10 +19,7 @@ export function Footer() {
             <p className="text-text-muted text-sm">{t('copyright')}</p>
           </div>
 
-          <StoreButtons
-            variant="compact"
-            onStoreClick={() => setIsModalOpen(true)}
-          />
+          <StoreButtons variant="compact" />
 
           <div className="flex items-center gap-4">
             <a
@@ -68,12 +62,6 @@ export function Footer() {
           </a>
         </div>
       </div>
-
-      <ComingSoonModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        autoCloseMs={3000}
-      />
     </footer>
   );
 }

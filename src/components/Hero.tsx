@@ -1,16 +1,13 @@
 'use client';
 
-import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { StoreButtons } from './StoreButtons';
-import { ComingSoonModal } from './ComingSoonModal';
 
 export function Hero() {
   const t = useTranslations('hero');
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
@@ -40,44 +37,18 @@ export function Hero() {
               'linear-gradient(to bottom, rgba(10, 10, 15, 0.85) 0%, rgba(10, 10, 15, 0.75) 50%, rgba(10, 10, 15, 0.9) 100%)',
           }}
         />
-        {/* 캐릭터 주변 퍼플 글로우 (오른쪽 영역, 3초 주기 opacity 펄스) */}
+        {/* (a) 퍼플 글로우 오브 - 캐릭터 뒤쪽 */}
         <div
-          className="absolute inset-0 pointer-events-none z-[1]"
-          aria-hidden
-        >
-          <div
-            className="absolute right-0 top-1/2 -translate-y-1/2 w-[70%] h-[120%] min-w-[400px]"
-            style={{
-              background:
-                'radial-gradient(ellipse at 85% 50%, rgba(139, 92, 246, 0.15) 0%, rgba(139, 92, 246, 0.05) 40%, transparent 70%)',
-              animation: 'hero-glow-pulse 3s ease-in-out infinite',
-              willChange: 'opacity',
-            }}
-          />
-        </div>
-        {/* 떠다니는 퍼플 빛 점 (각각 다른 duration 3s~6s) */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]" aria-hidden>
-          <div
-            className="absolute right-[15%] top-[35%] w-2 h-2 rounded-full bg-purple-400 blur-[4px]"
-            style={{ animation: 'hero-particle-float 3s ease-in-out infinite' }}
-          />
-          <div
-            className="absolute right-[25%] top-[45%] w-[6px] h-[6px] rounded-full bg-purple-400 blur-[4px]"
-            style={{ animation: 'hero-particle-float 4s ease-in-out infinite 0.5s' }}
-          />
-          <div
-            className="absolute right-[20%] top-[55%] w-[5px] h-[5px] rounded-full bg-purple-400 blur-[4px]"
-            style={{ animation: 'hero-particle-float 5s ease-in-out infinite 1s' }}
-          />
-          <div
-            className="absolute right-[10%] top-[50%] w-[8px] h-[8px] rounded-full bg-purple-400 blur-[4px]"
-            style={{ animation: 'hero-particle-float 6s ease-in-out infinite 0.2s' }}
-          />
-          <div
-            className="absolute right-[18%] top-[40%] w-[4px] h-[4px] rounded-full bg-purple-400 blur-[4px]"
-            style={{ animation: 'hero-particle-float 4.5s ease-in-out infinite 1.5s' }}
-          />
-        </div>
+          className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full pointer-events-none animate-pulse-glow"
+          style={{
+            background:
+              'radial-gradient(circle, rgba(139,92,246,0.2) 0%, transparent 70%)',
+          }}
+        />
+        {/* (b) 떠다니는 빛 점들 3개 */}
+        <div className="absolute top-[30%] right-[35%] w-2 h-2 bg-purple-400 rounded-full blur-sm animate-float-1 pointer-events-none" />
+        <div className="absolute top-[50%] right-[25%] w-1.5 h-1.5 bg-purple-300 rounded-full blur-sm animate-float-2 pointer-events-none" />
+        <div className="absolute top-[40%] right-[45%] w-2.5 h-2.5 bg-violet-400 rounded-full blur-md animate-float-3 pointer-events-none" />
         {/* 하단 퍼플 라이트 반사 효과 */}
         <div
           className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
@@ -108,7 +79,8 @@ export function Hero() {
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
-              textShadow: '0 0 40px rgba(139, 92, 246, 0.3)',
+              textShadow:
+                '0 0 40px rgba(139,92,246,0.3), 0 0 80px rgba(139,92,246,0.1)',
             }}
           >
             {t('title')}
@@ -127,10 +99,7 @@ export function Hero() {
             transition={{ delay: 0.8, duration: 0.6 }}
             className="mt-8"
           >
-            <StoreButtons
-              variant="default"
-              onStoreClick={() => setIsModalOpen(true)}
-            />
+            <StoreButtons variant="default" />
           </motion.div>
         </motion.div>
       </div>
@@ -151,12 +120,6 @@ export function Hero() {
           <ChevronDown className="w-6 h-6" />
         </motion.div>
       </motion.div>
-
-      <ComingSoonModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        autoCloseMs={3000}
-      />
     </section>
   );
 }

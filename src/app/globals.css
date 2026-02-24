@@ -53,22 +53,64 @@
 }
 
 /* Hero 효과 애니메이션 */
-@keyframes hero-glow-pulse {
+@keyframes pulse-glow {
   0%, 100% {
-    opacity: 0.1;
+    opacity: 0.15;
+    transform: scale(1);
   }
   50% {
-    opacity: 0.25;
+    opacity: 0.3;
+    transform: scale(1.05);
   }
 }
 
-@keyframes hero-particle-float {
+@keyframes float-1 {
   0%, 100% {
-    transform: translateY(0);
+    transform: translateY(0px);
+    opacity: 0.6;
   }
   50% {
-    transform: translateY(-12px);
+    transform: translateY(-20px);
+    opacity: 1;
   }
+}
+
+@keyframes float-2 {
+  0%, 100% {
+    transform: translateY(0px);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-30px);
+    opacity: 0.9;
+  }
+}
+
+@keyframes float-3 {
+  0%, 100% {
+    transform: translateY(0px);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(-15px);
+    opacity: 0.8;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-float-1 {
+  animation: float-1 4s ease-in-out infinite;
+}
+
+.animate-float-2 {
+  animation: float-2 5s ease-in-out infinite;
+}
+
+.animate-float-3 {
+  animation: float-3 3.5s ease-in-out infinite;
 }
 
 @keyframes hero-bottom-glow-blink {

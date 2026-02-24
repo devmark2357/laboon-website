@@ -1,8 +1,8 @@
 'use client';
 
-import { STORE_URLS } from '@/lib/constants';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Apple, Play, Gamepad2 } from 'lucide-react';
-import Link from 'next/link';
 
 const STORE_ITEMS = [
   { key: 'appStore' as const, icon: Apple, label: 'App Store' },
@@ -14,14 +14,20 @@ const STORE_ITEMS = [
 interface StoreButtonsProps {
   variant?: 'default' | 'compact';
   className?: string;
-  onStoreClick?: () => void;
 }
 
 export function StoreButtons({
   variant = 'default',
   className = '',
-  onStoreClick,
 }: StoreButtonsProps) {
+  const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!activeTooltip) return;
+    const timer = setTimeout(() => setActiveTooltip(null), 2000);
+    return () => clearTimeout(timer);
+  }, [activeTooltip]);
+
   const buttonClass = `
     flex items-center justify-center rounded-lg
     transition-all duration-300
@@ -35,12 +41,11 @@ export function StoreButtons({
     <div
       className={`flex items-center gap-3 ${variant === 'compact' ? 'gap-2' : ''} ${className}`}
     >
-      {STORE_ITEMS.map(({ key, icon: Icon, label }) =>
-        onStoreClick ? (
+      {STORE_ITEMS.map(({ key, icon: Icon, label }) => (
+        <div key={key} className="relative">
           <button
-            key={key}
             type="button"
-            onClick={onStoreClick}
+            onClick={() => setActiveTooltip(key)}
             className={buttonClass}
             aria-label={`${label} - Coming Soon`}
           >
@@ -49,20 +54,23 @@ export function StoreButtons({
               strokeWidth={1.5}
             />
           </button>
-        ) : (
-          <Link
-            key={key}
-            href={STORE_URLS[key]}
-            className={buttonClass}
-            aria-label={`${label} - Coming Soon`}
-          >
-            <Icon
-              className={variant === 'default' ? 'w-6 h-6' : 'w-5 h-5'}
-              strokeWidth={1.5}
-            />
-          </Link>
-        )
-      )}
+          <AnimatePresence>
+            {activeTooltip === key && (
+              <motion.div
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.2 }}
+                className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50"
+              >
+                <div className="max-w-[200px] px-3 py-2 rounded-lg bg-surface-elevated border border-accent/30 shadow-glow text-accent text-sm font-medium whitespace-nowrap">
+                  Coming Soon
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      ))}
     </div>
   );
 }
