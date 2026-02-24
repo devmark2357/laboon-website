@@ -21,6 +21,70 @@ export function Hero() {
           priority
           sizes="100vw"
         />
+        {/* 캐릭터 주변 퍼플 글로우 (오른쪽 영역, 펄스 애니메이션) */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ willChange: 'transform' }}
+        >
+          <div
+            className="absolute right-0 top-1/2 -translate-y-1/2 w-[70%] h-[120%] min-w-[400px]"
+            style={{
+              background:
+                'radial-gradient(ellipse at 85% 50%, rgba(139, 92, 246, 0.15) 0%, rgba(139, 92, 246, 0.05) 40%, transparent 70%)',
+              animation: 'hero-glow-pulse 3.5s ease-in-out infinite',
+              willChange: 'transform, opacity',
+            }}
+          />
+        </div>
+        {/* 떠다니는 파티클 효과 (캐릭터 주변) */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div
+            className="absolute right-[15%] top-[35%] w-2 h-2 rounded-full bg-accent/60 blur-[4px]"
+            style={{
+              animation: 'hero-particle-float-1 4s ease-in-out infinite',
+              willChange: 'transform',
+            }}
+          />
+          <div
+            className="absolute right-[25%] top-[45%] w-1.5 h-1.5 rounded-full bg-accent/50 blur-[4px]"
+            style={{
+              animation: 'hero-particle-float-2 3.2s ease-in-out infinite 0.5s',
+              willChange: 'transform',
+            }}
+          />
+          <div
+            className="absolute right-[20%] top-[55%] w-[6px] h-[6px] rounded-full bg-accent/70 blur-[4px]"
+            style={{
+              animation: 'hero-particle-float-3 3.8s ease-in-out infinite 1s',
+              willChange: 'transform',
+            }}
+          />
+          <div
+            className="absolute right-[10%] top-[50%] w-[5px] h-[5px] rounded-full bg-accent/55 blur-[4px]"
+            style={{
+              animation: 'hero-particle-float-4 4.2s ease-in-out infinite 0.2s',
+              willChange: 'transform',
+            }}
+          />
+          <div
+            className="absolute right-[18%] top-[40%] w-[3px] h-[3px] rounded-full bg-accent/65 blur-[4px]"
+            style={{
+              animation: 'hero-particle-float-5 3.5s ease-in-out infinite 1.5s',
+              willChange: 'transform',
+            }}
+          />
+        </div>
+        {/* 하단 퍼플 라이트 반사 효과 */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
+          style={{
+            background:
+              'linear-gradient(to top, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0.1) 30%, transparent 100%)',
+            opacity: 0.3,
+            animation: 'hero-bottom-glow-blink 2.5s ease-in-out infinite',
+            willChange: 'opacity',
+          }}
+        />
         {/* 데스크톱: 왼쪽 어둡게(텍스트 가독성), 오른쪽 투명(캐릭터 노출) */}
         <div
           className="absolute inset-0 hidden md:block"
@@ -56,6 +120,7 @@ export function Hero() {
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
+              textShadow: '0 0 40px rgba(139, 92, 246, 0.3)',
             }}
           >
             {t('title')}
