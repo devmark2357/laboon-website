@@ -20,8 +20,7 @@ export function Navbar() {
 
   const navLinks = [
     { href: '#about', label: t('about') },
-    { href: '#features', label: t('features') },
-    { href: '#roadmap', label: t('roadmap') },
+    { href: '#trailer', label: t('trailer') },
   ];
 
   return (

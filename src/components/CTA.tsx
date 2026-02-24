@@ -32,7 +32,7 @@ export function CTA() {
             {t('title')}
           </h2>
           <p className="text-accent-light text-lg mb-12">
-            {t('subtitle')}
+            {t('comingSoon')}
           </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">

@@ -2,8 +2,7 @@
   "nav": {
     "logo": "LABOON",
     "about": "About",
-    "features": "Features",
-    "roadmap": "Roadmap",
+    "trailer": "Trailer",
     "comingSoon": "Coming Soon"
   },
   "hero": {
@@ -90,13 +89,13 @@
   },
   "cta": {
     "title": "Ready to meet your AI companion?",
-    "subtitle": "REALMATE · Launching March 2026",
+    "comingSoon": "Coming Soon",
     "emailPlaceholder": "Enter your email",
     "button": "Notify Me"
   },
   "footer": {
     "logo": "LABOON",
-    "copyright": "© 2026 LABOON. All rights reserved.",
+    "copyright": "© LABOON. All rights reserved.",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service"
   }

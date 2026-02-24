@@ -131,16 +131,16 @@ export function Hero() {
           <p className="text-text-muted text-base md:text-lg max-w-2xl mb-12">
             {t('description')}
           </p>
-        </motion.div>
 
-        {/* 스토어 배지 - 왼쪽 하단 */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-          className="absolute bottom-24 left-4 md:left-6 lg:left-8"
-        >
-          <StoreButtons variant="default" />
+          {/* 스토어 배지 - 텍스트 아래, static position */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+            className="mt-8"
+          >
+            <StoreButtons variant="default" />
+          </motion.div>
         </motion.div>
       </div>
 
