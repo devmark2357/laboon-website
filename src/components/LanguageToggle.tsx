@@ -3,6 +3,9 @@
 import { useLocale } from 'next-intl';
 import { usePathname, useRouter } from '@/i18n/navigation';
 import { useTransition } from 'react';
+import { useCallback } from 'react';
+
+const NEXT_LOCALE_COOKIE = 'NEXT_LOCALE';
 
 export function LanguageToggle() {
   const locale = useLocale();
@@ -10,13 +13,14 @@ export function LanguageToggle() {
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
 
-  const toggleLocale = () => {
+  const toggleLocale = useCallback(() => {
     const newLocale = locale === 'ko' ? 'en' : 'ko';
-    const newPath = pathname === '/' ? `/${newLocale}` : `/${newLocale}${pathname}`;
+    const pathWithHash = pathname + (typeof window !== 'undefined' ? window.location.hash : '');
+    document.cookie = `${NEXT_LOCALE_COOKIE}=${newLocale};path=/;max-age=31536000;SameSite=Lax`;
     startTransition(() => {
-      router.replace(newPath);
+      router.replace(pathWithHash, { locale: newLocale });
     });
-  };
+  }, [locale, pathname, router]);
 
   return (
     <button
