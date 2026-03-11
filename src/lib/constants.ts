@@ -16,8 +16,9 @@ export const SOCIAL_URLS = {
 } as const;
 
 export const LEGAL_URLS = {
-  privacy: '#',
-  terms: '#',
+  terms: '/terms-of-service.html',
+  privacy: '/privacy-policy.html',
+  refund: '/refund-policy.html',
 } as const;
 
 export const TRAILER_YOUTUBE_ID = 'Wrj3gjRE2oY';

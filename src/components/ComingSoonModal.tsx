@@ -42,7 +42,7 @@ export function ComingSoonModal({
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="relative pointer-events-auto w-full max-w-md mx-4 p-8 rounded-2xl bg-surface-elevated border-2 border-accent/50 shadow-[0_0_40px_rgba(139,92,246,0.3)]"
+              className="relative pointer-events-auto w-full max-w-md mx-4 p-8 rounded-2xl bg-surface-elevated border-2 border-accent/50 shadow-[0_0_40px_rgba(255,107,53,0.3)]"
               onClick={(e) => e.stopPropagation()}
             >
               <button

@@ -95,9 +95,10 @@
   },
   "footer": {
     "logo": "LABOON",
-    "copyright": "© LABOON. All rights reserved.",
-    "privacy": "Privacy Policy",
-    "terms": "Terms of Service"
+    "copyright": "© 2026 LABOON. All rights reserved.",
+    "terms": "이용약관",
+    "privacy": "개인정보처리방침",
+    "refund": "환불정책"
   },
   "storeModal": {
     "subtitle": "출시 준비 중입니다"

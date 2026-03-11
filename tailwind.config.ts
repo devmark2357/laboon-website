@@ -15,9 +15,9 @@ const config: Config = {
           elevated: '#1A1726',
         },
         accent: {
-          DEFAULT: '#8B5CF6',
-          light: '#A78BFA',
-          glow: '#DDD6FE',
+          DEFAULT: '#FF6B35',
+          light: '#FF8C5A',
+          glow: '#FFB088',
         },
         text: {
           DEFAULT: '#FFFFFF',
@@ -30,12 +30,12 @@ const config: Config = {
         body: ['Pretendard', 'sans-serif'],
       },
       backgroundImage: {
-        'gradient-accent': 'linear-gradient(135deg, #7C3AED 0%, #C084FC 100%)',
+        'gradient-accent': 'linear-gradient(135deg, #FF6B35 0%, #FF4500 100%)',
         'gradient-hero': 'linear-gradient(180deg, #0A0A0F 0%, #13111C 100%)',
       },
       boxShadow: {
-        glow: '0 0 20px rgba(139, 92, 246, 0.4)',
-        'glow-lg': '0 0 40px rgba(139, 92, 246, 0.5)',
+        glow: '0 0 20px rgba(255, 107, 53, 0.4)',
+        'glow-lg': '0 0 40px rgba(255, 107, 53, 0.5)',
       },
       animation: {
         bounce: 'bounce 2s infinite',
