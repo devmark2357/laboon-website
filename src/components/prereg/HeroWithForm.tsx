@@ -28,8 +28,8 @@ export function HeroWithForm({
 
   return (
     <section className="relative min-h-[100dvh] overflow-hidden bg-[#0A0A0A]">
-      {/* ===== 배경 이미지 ===== */}
-      {/* 모바일 */}
+
+      {/* ===== 배경: 모바일 ===== */}
       <div className="absolute inset-0 md:hidden">
         <Image
           src="/images/prereg/hero-mobile.png"
@@ -37,19 +37,19 @@ export function HeroWithForm({
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[center_20%]"
+          className="object-cover object-[center_15%]"
+          quality={85}
         />
-        {/* 모바일 그라데이션: 캐릭터 얼굴 보이고 하단은 짙게 */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(to bottom, rgba(10,10,10,0) 0%, rgba(10,10,10,0.1) 25%, rgba(10,10,10,0.7) 50%, rgba(10,10,10,0.95) 70%, #0A0A0A 100%)',
+              'linear-gradient(to bottom, rgba(10,10,10,0) 0%, rgba(10,10,10,0.05) 20%, rgba(10,10,10,0.6) 45%, rgba(10,10,10,0.92) 65%, #0A0A0A 85%)',
           }}
         />
       </div>
 
-      {/* 데스크톱 */}
+      {/* ===== 배경: 데스크톱 ===== */}
       <div className="absolute inset-0 hidden md:block">
         <Image
           src="/images/prereg/hero-desktop.png"
@@ -57,14 +57,15 @@ export function HeroWithForm({
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[70%_center]"
+          className="object-cover object-[65%_center]"
+          quality={90}
         />
-        {/* 데스크톱 그라데이션: 좌측을 강하게 가려서 이미지 속 로고를 숨김 */}
+        {/* 좌→우 그라데이션: 좌측 완전 다크, 캐릭터는 우측에 자연스럽게 */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(to right, #0A0A0A 0%, #0A0A0A 25%, rgba(10,10,10,0.85) 40%, rgba(10,10,10,0.4) 60%, rgba(10,10,10,0.15) 80%, rgba(10,10,10,0.3) 100%)',
+              'linear-gradient(to right, #0A0A0A 0%, #0A0A0A 20%, rgba(10,10,10,0.92) 35%, rgba(10,10,10,0.5) 55%, rgba(10,10,10,0.1) 75%, rgba(10,10,10,0.25) 100%)',
           }}
         />
         {/* 상하 비네팅 */}
@@ -72,7 +73,7 @@ export function HeroWithForm({
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(to bottom, rgba(10,10,10,0.4) 0%, transparent 20%, transparent 80%, rgba(10,10,10,0.6) 100%)',
+              'linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, transparent 15%, transparent 85%, rgba(10,10,10,0.5) 100%)',
           }}
         />
       </div>
@@ -80,67 +81,54 @@ export function HeroWithForm({
       {/* ===== 떠다니는 파티클 ===== */}
       <div className="absolute inset-0 z-[5] pointer-events-none" aria-hidden>
         <div
-          className="prereg-float-dot absolute w-1 h-1 rounded-full bg-[#FF6B35]/40"
-          style={{ top: '25%', left: '35%' }}
+          className="prereg-float-dot absolute w-1 h-1 rounded-full bg-[#FF6B35]/30"
+          style={{ top: '22%', left: '32%' }}
         />
         <div
-          className="prereg-float-dot absolute w-1.5 h-1.5 rounded-full bg-[#FF6B35]/25"
-          style={{ top: '45%', left: '20%' }}
+          className="prereg-float-dot absolute w-1.5 h-1.5 rounded-full bg-[#FF6B35]/20"
+          style={{ top: '48%', left: '18%' }}
         />
         <div
-          className="prereg-float-dot absolute w-1 h-1 rounded-full bg-[#FF6B35]/35"
-          style={{ top: '55%', left: '50%' }}
+          className="prereg-float-dot absolute w-1 h-1 rounded-full bg-[#FF6B35]/25"
+          style={{ top: '35%', left: '52%' }}
         />
       </div>
 
       {/* ===== 콘텐츠 ===== */}
       <div className="relative z-10 min-h-[100dvh] flex flex-col">
 
-        {/* ── 데스크톱 레이아웃 ── */}
-        <div className="hidden md:flex flex-1 items-center pl-12 lg:pl-20 xl:pl-28 pr-8">
-          <div className="w-full max-w-[420px]">
-            {/* 로고 이미지 */}
-            <div className="mb-6">
-              <Image
-                src="/images/prereg/realmate_logo_W.png"
-                alt="Realmate"
-                width={240}
-                height={52}
-                className="h-12 w-auto"
-              />
-            </div>
+        {/* ── 공통 로고 (상단 좌측, 크게) ── */}
+        <div className="shrink-0 pt-6 md:pt-8 px-5 md:px-12 lg:px-20">
+          <Image
+            src="/images/prereg/realmate_logo_W.png"
+            alt="Realmate"
+            width={280}
+            height={60}
+            className="h-10 md:h-14 w-auto"
+            priority
+          />
+        </div>
 
-            {/* 폼 패널 */}
-            <div className="bg-black/50 backdrop-blur-lg rounded-2xl p-7 border border-white/[0.06]">
-              <PreregForm
-                selectedCharacters={selectedCharacters}
-                displayCount={displayCount}
-                onSuccess={onSuccess}
-                isRegistered={isRegistered}
-                variant="hero"
-              />
-            </div>
+        {/* ── 데스크톱: 폼 세로 중앙, 카드 래퍼 없이 직접 배치 ── */}
+        <div className="hidden md:flex flex-1 items-center px-12 lg:px-20 xl:px-28">
+          <div className="w-full max-w-[440px]">
+            <PreregForm
+              selectedCharacters={selectedCharacters}
+              displayCount={displayCount}
+              onSuccess={onSuccess}
+              isRegistered={isRegistered}
+              variant="hero"
+            />
           </div>
         </div>
 
-        {/* ── 모바일 레이아웃 ── */}
+        {/* ── 모바일: 캐릭터 보이는 공간 + 하단 폼 ── */}
         <div className="md:hidden flex flex-col flex-1">
-          {/* 상단 로고 */}
-          <div className="pt-8 px-5 shrink-0">
-            <Image
-              src="/images/prereg/realmate_logo_W.png"
-              alt="Realmate"
-              width={180}
-              height={40}
-              className="h-10 w-auto"
-            />
-          </div>
-
-          {/* 캐릭터 보이는 영역 (자연스러운 여백) */}
-          <div className="flex-1" />
+          {/* 캐릭터가 보이는 여백 */}
+          <div className="flex-1 min-h-[120px]" />
 
           {/* 하단 폼 */}
-          <div className="px-5 pb-[max(1.5rem,env(safe-area-inset-bottom,0px))]">
+          <div className="px-5 pb-[max(1.25rem,env(safe-area-inset-bottom,0px))]">
             <PreregForm
               selectedCharacters={selectedCharacters}
               displayCount={displayCount}
@@ -151,9 +139,9 @@ export function HeroWithForm({
           </div>
 
           {/* 스크롤 유도 */}
-          <div className="text-center pb-4">
-            <span className="prereg-scroll-bounce inline-block text-white/25 text-[11px] tracking-wider">
-              ↓ Explore
+          <div className="text-center pb-3">
+            <span className="prereg-scroll-bounce inline-block text-white/20 text-[11px] tracking-widest">
+              ↓
             </span>
           </div>
         </div>
