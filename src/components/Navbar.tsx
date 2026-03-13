@@ -48,12 +48,18 @@ export function Navbar() {
               {link.label}
             </a>
           ))}
+          <a
+            href="/prereg"
+            className="text-sm font-medium text-[#FF6B35] hover:text-[#FF8C5A] transition-colors"
+          >
+            Pre-register
+          </a>
         </div>
 
         <div className="hidden md:flex items-center gap-6">
           <LanguageToggle />
           <a
-            href="#cta"
+            href="/prereg"
             className="px-5 py-2.5 rounded-lg bg-gradient-accent text-white font-semibold text-sm hover:opacity-90 transition-opacity shadow-glow"
           >
             {t('comingSoon')}
@@ -90,10 +96,17 @@ export function Navbar() {
                   {link.label}
                 </a>
               ))}
+              <a
+                href="/prereg"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-[#FF6B35] hover:text-[#FF8C5A] py-2 text-sm font-medium transition-colors"
+              >
+                Pre-register
+              </a>
               <div className="flex items-center justify-between pt-2 border-t border-white/10">
                 <LanguageToggle />
                 <a
-                  href="#cta"
+                  href="/prereg"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="px-4 py-2 rounded-lg bg-gradient-accent text-white font-semibold text-sm"
                 >
