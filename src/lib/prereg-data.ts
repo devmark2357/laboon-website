@@ -22,11 +22,25 @@ export const characters: Character[] = [
     bio: '목공 작업실 겸 위스키 바 운영, 쉽게 마음 열지 않는 시크한 여자',
   },
   {
+    id: 'hanabi',
+    name: '하나비',
+    nameEn: 'Hanabi',
+    tags: ['직진형', '반전매력', '쿨한'],
+    bio: '레이싱 모델, 겉은 차갑지만 알수록 순수한 직진형 여자',
+  },
+  {
     id: 'eunbi',
     name: '은비',
     nameEn: 'Eunbi',
     tags: ['ENFP', '책벌레', '감성적'],
     bio: '북촌 도서관 사서, 책 속에 사는 감성적인 ENFP 소녀',
+  },
+  {
+    id: 'rina',
+    name: '린아',
+    nameEn: 'Rina',
+    tags: ['여우형', '솔직', '배려'],
+    bio: '청담동 모델, 화려한 겉모습 뒤에 여린 속마음을 가진 여우형 매력',
   },
   {
     id: 'hayun',
@@ -36,32 +50,18 @@ export const characters: Character[] = [
     bio: '양양 바다 여행 크리에이터, 카메라 뒤의 진짜 모습이 궁금해',
   },
   {
-    id: 'subin',
-    name: '수빈',
-    nameEn: 'Subin',
-    tags: ['INFP', '수줍은', '순수'],
-    bio: '망원동 문구 디자이너, 수줍어서 먼저 말 못하지만 스케치북엔 네 이야기뿐',
-  },
-  {
-    id: 'hanabi',
-    name: '하나비',
-    nameEn: 'Hanabi',
-    tags: ['직진형', '반전매력', '쿨한'],
-    bio: '레이싱 모델, 겉은 차갑지만 알수록 순수한 직진형 여자',
-  },
-  {
-    id: 'rina',
-    name: '리나',
-    nameEn: 'Rina',
-    tags: ['여우형', '솔직', '배려'],
-    bio: '청담동 모델, 화려한 겉모습 뒤에 여린 속마음을 가진 여우형 매력',
-  },
-  {
     id: 'youndin',
     name: '욘딘',
     nameEn: 'Youndin',
     tags: ['INFP', '순수', '외유내강'],
     bio: '수원 대학생 모델, 순수하고 귀엽지만 속은 단단한 외유내강 소녀',
+  },
+  {
+    id: 'subin',
+    name: '수빈',
+    nameEn: 'Subin',
+    tags: ['INFP', '수줍은', '순수'],
+    bio: '망원동 문구 디자이너, 수줍어서 먼저 말 못하지만 스케치북엔 네 이야기뿐',
   },
 ];
 
@@ -114,7 +114,7 @@ export const milestones: Milestone[] = [
   { target: 9000, label: '9,000명', reward: '에너지 100 + 코인 1,000', icon: '💎' },
 ];
 
-export const LAUNCH_DATE = '2026-03-27T00:00:00+09:00';
+export const LAUNCH_DATE = '2026-03-30T09:00:00+09:00';
 
 export const COUNT_MULTIPLIER = Number(process.env.NEXT_PUBLIC_COUNT_MULTIPLIER) || 9;
 export const COUNT_SEED = Number(process.env.NEXT_PUBLIC_COUNT_SEED) || 47;

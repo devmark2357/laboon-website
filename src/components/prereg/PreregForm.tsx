@@ -122,13 +122,13 @@ export function PreregForm({
       <form onSubmit={handleSubmit} className="w-full max-w-lg mx-auto space-y-4">
         {isHero && (
           <>
-            <p className="text-[#FF6B35] text-xs tracking-[0.3em] uppercase">
+            <p className="text-[#FF6B35] text-sm md:text-base tracking-[0.2em] md:tracking-[0.3em] uppercase font-medium">
               REAL AI, REAL CONNECTION
             </p>
-            <p className="text-xl md:text-3xl font-bold text-white whitespace-pre-line leading-tight text-left">
+            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white whitespace-pre-line leading-[1.2] text-left">
               실제 인플루언서 기반 AI와{'\n'}진짜 같은 연애 시뮬레이션
-            </p>
-            <p className="text-[#CCCCCC] text-sm">사전예약하고 출시 혜택 받기</p>
+            </h1>
+            <p className="text-white/50 text-sm md:text-base">사전예약하고 출시 혜택 받기</p>
           </>
         )}
 
@@ -147,7 +147,7 @@ export function PreregForm({
               type="checkbox"
               checked={privacyAgreed}
               onChange={(e) => setPrivacyAgreed(e.target.checked)}
-              className="rounded border-white/30 text-[#FF6B35] focus:ring-[#FF6B35]"
+              className="rounded border-white/30 text-[#FF6B35] focus:ring-[#FF6B35] mt-0.5"
             />
             <span>
               (필수){' '}
@@ -165,7 +165,7 @@ export function PreregForm({
               type="checkbox"
               checked={marketingAgreed}
               onChange={(e) => setMarketingAgreed(e.target.checked)}
-              className="rounded border-white/30 text-[#FF6B35] focus:ring-[#FF6B35]"
+              className="rounded border-white/30 text-[#FF6B35] focus:ring-[#FF6B35] mt-0.5"
             />
             <span>(선택) 마케팅 정보 수신 동의</span>
           </label>
