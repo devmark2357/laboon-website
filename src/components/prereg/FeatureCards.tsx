@@ -7,7 +7,7 @@ import { features } from '@/lib/prereg-data';
 export function FeatureCards() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(2);
-  const [initialized, setInitialized] = useState(false);
+  const initialScrollDoneRef = useRef(false);
 
   const getCardMetrics = useCallback(() => {
     const el = scrollRef.current;
@@ -42,19 +42,38 @@ export function FeatureCards() {
     return () => el.removeEventListener('scroll', updateActiveIndex);
   }, [updateActiveIndex]);
 
-  // 초기 중앙 스크롤 — 여러 번 시도해서 확실하게
+  // 초기 스크롤: 첫 카드 너비가 0보다 클 때까지 rAF 폴링 후 3번째 카드(Real Event) 중앙 정렬
   useEffect(() => {
-    const attempts = [100, 300, 600, 1000];
-    const timers = attempts.map((delay) =>
-      setTimeout(() => {
-        if (!initialized) {
-          scrollToIndex(2, 'instant');
-          setInitialized(true);
-        }
-      }, delay)
-    );
-    return () => timers.forEach(clearTimeout);
-  }, [scrollToIndex, initialized]);
+    if (initialScrollDoneRef.current) return;
+
+    const MAX_MS = 2000;
+    const start = Date.now();
+    let rafId: number;
+
+    const pollAndScroll = () => {
+      if (initialScrollDoneRef.current) return;
+      if (Date.now() - start > MAX_MS) return;
+
+      const el = scrollRef.current;
+      const card = el?.querySelector('[data-card]') as HTMLElement | null;
+      if (card?.offsetWidth && card.offsetWidth > 0) {
+        initialScrollDoneRef.current = true;
+        const gap = 16;
+        const containerWidth = el!.offsetWidth;
+        const scrollTo = (card.offsetWidth + gap) * 2 - (containerWidth - card.offsetWidth) / 2;
+        el!.scrollTo({ left: Math.max(0, scrollTo), behavior: 'instant' });
+        return;
+      }
+      rafId = requestAnimationFrame(pollAndScroll);
+    };
+
+    rafId = requestAnimationFrame(pollAndScroll);
+    const timeoutId = setTimeout(() => cancelAnimationFrame(rafId), MAX_MS);
+    return () => {
+      clearTimeout(timeoutId);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
 
   // 윈도우 리사이즈 시 재정렬
   useEffect(() => {
@@ -128,7 +147,7 @@ export function FeatureCards() {
                   fill
                   sizes="300px"
                   className="object-cover"
-                  loading="lazy"
+                  loading="eager"
                 />
               </div>
               <p className={`text-center mt-3 text-sm transition-opacity duration-500 ${
