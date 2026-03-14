@@ -89,6 +89,7 @@ export function PreregForm({
         if (res.ok) {
           if (typeof window !== 'undefined') {
             localStorage.setItem('prereg_done', 'true');
+            window.fbq?.('track', 'CompleteRegistration');
           }
           onSuccess();
           return;
