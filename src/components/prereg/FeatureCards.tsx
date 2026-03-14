@@ -7,34 +7,36 @@ import { features } from '@/lib/prereg-data';
 export function FeatureCards() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(2);
-  const [sidePadding, setSidePadding] = useState(0);
-  const initialScrollDoneRef = useRef(false);
-
-  const getCardMetrics = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el) return { cardWidth: 280, gap: 16 };
-    const card = el.querySelector('[data-card]') as HTMLElement | null;
-    return { cardWidth: card?.offsetWidth || 280, gap: 16 };
-  }, []);
 
   const scrollToIndex = useCallback((index: number, behavior: ScrollBehavior = 'smooth') => {
     const el = scrollRef.current;
     if (!el) return;
-    const { cardWidth, gap } = getCardMetrics();
+    const cards = el.querySelectorAll('[data-card]');
+    if (!cards[index]) return;
+    const card = cards[index] as HTMLElement;
     const containerWidth = el.offsetWidth;
-    const scrollTo = (cardWidth + gap) * index - (containerWidth - cardWidth) / 2;
-    el.scrollTo({ left: Math.max(0, scrollTo), behavior });
-  }, [getCardMetrics]);
+    const scrollTo = card.offsetLeft - (containerWidth - card.offsetWidth) / 2;
+    el.scrollTo({ left: scrollTo, behavior });
+  }, []);
 
   const updateActiveIndex = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
-    const { cardWidth, gap } = getCardMetrics();
-    const containerWidth = el.offsetWidth;
-    const centerOffset = el.scrollLeft + containerWidth / 2;
-    const index = Math.round((centerOffset - cardWidth / 2) / (cardWidth + gap));
-    setActiveIndex(Math.max(0, Math.min(index, features.length - 1)));
-  }, [getCardMetrics]);
+    const cards = el.querySelectorAll('[data-card]');
+    const containerCenter = el.scrollLeft + el.offsetWidth / 2;
+    let closest = 0;
+    let minDist = Infinity;
+    cards.forEach((card, i) => {
+      const cardEl = card as HTMLElement;
+      const cardCenter = cardEl.offsetLeft + cardEl.offsetWidth / 2;
+      const dist = Math.abs(containerCenter - cardCenter);
+      if (dist < minDist) {
+        minDist = dist;
+        closest = i;
+      }
+    });
+    setActiveIndex(closest);
+  }, []);
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -43,36 +45,13 @@ export function FeatureCards() {
     return () => el.removeEventListener('scroll', updateActiveIndex);
   }, [updateActiveIndex]);
 
-  // 캐러셀 좌우 패딩: 컨테이너 너비와 카드 너비로 중앙 정렬되도록 동적 계산
+  // 초기 스크롤: 3번째 카드(Real Event) 중앙 정렬
   useEffect(() => {
-    const calculate = () => {
-      const el = scrollRef.current;
-      if (!el) return;
-      const card = el.querySelector('[data-card]') as HTMLElement | null;
-      if (!card?.offsetWidth) return;
-      const containerWidth = el.parentElement?.offsetWidth ?? window.innerWidth;
-      const cardWidth = card.offsetWidth;
-      const padding = (containerWidth - cardWidth) / 2;
-      setSidePadding(Math.max(16, padding));
-    };
-    requestAnimationFrame(calculate);
-    const t = setTimeout(calculate, 100);
-    window.addEventListener('resize', calculate);
-    return () => {
-      clearTimeout(t);
-      window.removeEventListener('resize', calculate);
-    };
-  }, []);
+    const timer = setTimeout(() => scrollToIndex(2, 'instant'), 500);
+    return () => clearTimeout(timer);
+  }, [scrollToIndex]);
 
-  // sidePadding 적용 후 3번째 카드(Real Event) 중앙 정렬 (최초 1회만)
-  useEffect(() => {
-    if (sidePadding > 0 && !initialScrollDoneRef.current) {
-      initialScrollDoneRef.current = true;
-      requestAnimationFrame(() => scrollToIndex(2, 'instant'));
-    }
-  }, [sidePadding, scrollToIndex]);
-
-  // 윈도우 리사이즈 시 재정렬
+  // 윈도우 리사이즈 시 현재 활성 카드 재정렬
   useEffect(() => {
     const handleResize = () => scrollToIndex(activeIndex, 'instant');
     window.addEventListener('resize', handleResize);
@@ -111,49 +90,54 @@ export function FeatureCards() {
           </button>
         )}
 
-        {/* 캐러셀 */}
-        <div
-          ref={scrollRef}
-          className="flex gap-4 overflow-x-auto scrollbar-none"
-          style={{
-            scrollSnapType: 'x mandatory',
-            scrollbarWidth: 'none',
-            WebkitOverflowScrolling: 'touch',
-            paddingLeft: `${sidePadding}px`,
-            paddingRight: `${sidePadding}px`,
-          }}
-        >
-          {features.map((feature, i) => (
-            <div
-              key={feature.titleEn}
-              data-card
-              className="flex-shrink-0 w-[260px] md:w-[280px] lg:w-[300px]"
-              style={{ scrollSnapAlign: 'center' }}
-            >
+        {/* 캐러셀 wrapper + 스크롤 영역 */}
+        <div className="w-full overflow-hidden">
+          <div
+            ref={scrollRef}
+            className="flex gap-4 overflow-x-auto scrollbar-none snap-x snap-mandatory"
+            style={{
+              scrollbarWidth: 'none',
+              WebkitOverflowScrolling: 'touch',
+              scrollPaddingInline: '50%',
+            }}
+          >
+            {/* 앞 spacer — 화면 절반에서 카드 절반 뺀 만큼 */}
+            <div className="flex-shrink-0 w-[calc(50vw-140px)] md:w-[calc(50vw-150px)]" />
+
+            {features.map((feature, i) => (
               <div
-                className={`relative aspect-[9/16] rounded-2xl overflow-hidden border transition-all duration-500 cursor-pointer ${
-                  i === activeIndex
-                    ? 'border-[#FF6B35]/40 scale-100 opacity-100 shadow-[0_0_30px_rgba(255,107,53,0.15)]'
-                    : 'border-white/10 scale-[0.88] opacity-50'
-                }`}
-                onClick={() => scrollToIndex(i)}
+                key={feature.titleEn}
+                data-card
+                className="flex-shrink-0 w-[260px] md:w-[280px] lg:w-[300px] snap-center"
               >
-                <Image
-                  src={feature.image}
-                  alt={feature.titleKo}
-                  fill
-                  sizes="300px"
-                  className="object-cover"
-                  loading="eager"
-                />
+                <div
+                  className={`relative aspect-[9/16] rounded-2xl overflow-hidden border transition-all duration-500 cursor-pointer ${
+                    i === activeIndex
+                      ? 'border-[#FF6B35]/40 scale-100 opacity-100 shadow-[0_0_30px_rgba(255,107,53,0.15)]'
+                      : 'border-white/10 scale-[0.88] opacity-50'
+                  }`}
+                  onClick={() => scrollToIndex(i)}
+                >
+                  <Image
+                    src={feature.image}
+                    alt={feature.titleKo}
+                    fill
+                    sizes="300px"
+                    className="object-cover"
+                    loading="eager"
+                  />
+                </div>
+                <p className={`text-center mt-3 text-sm transition-opacity duration-500 ${
+                  i === activeIndex ? 'text-white/70' : 'text-white/25'
+                }`}>
+                  {feature.titleKo}
+                </p>
               </div>
-              <p className={`text-center mt-3 text-sm transition-opacity duration-500 ${
-                i === activeIndex ? 'text-white/70' : 'text-white/25'
-              }`}>
-                {feature.titleKo}
-              </p>
-            </div>
-          ))}
+            ))}
+
+            {/* 뒤 spacer */}
+            <div className="flex-shrink-0 w-[calc(50vw-140px)] md:w-[calc(50vw-150px)]" />
+          </div>
         </div>
       </div>
 
