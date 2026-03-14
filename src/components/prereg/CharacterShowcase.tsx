@@ -127,12 +127,13 @@ function CharacterCard({
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const hasLoadedVideoRef = useRef(false);
   const [imageError, setImageError] = useState(false);
   const [videoError, setVideoError] = useState(false);
   const [isInView, setIsInView] = useState(!isMobileCarousel);
   const isUnmuted = unmutedCharacterId === character.id;
 
-  // 뷰포트에 보이면 play, 안 보이면 pause (모바일 autoplay 대응)
+  // 뷰포트에 보이면 play, 안 보이면 pause (이미 재생 중이면 play() 호출 안 함 → 루프 리셋 방지)
   useEffect(() => {
     const video = videoRef.current;
     const el = isMobileCarousel ? containerRef.current : videoRef.current;
@@ -142,13 +143,15 @@ function CharacterCard({
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsInView(true);
-          if (video) video.play().catch(() => {});
+          if (video && video.paused) {
+            video.play().catch(() => {});
+          }
         } else {
           if (isMobileCarousel) setIsInView(false);
           if (video) video.pause();
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
 
     observer.observe(el);
@@ -171,7 +174,9 @@ function CharacterCard({
   };
 
   const showVideo = character.video && !videoError;
-  const loadVideo = showVideo && (!isMobileCarousel || isInView);
+  // 모바일: 한 번 src 설정 후 유지해 리렌더/스크롤 시 리로드 방지
+  if (showVideo && isInView && isMobileCarousel) hasLoadedVideoRef.current = true;
+  const loadVideo = showVideo && (!isMobileCarousel || isInView || hasLoadedVideoRef.current);
 
   return (
     <div
@@ -192,7 +197,10 @@ function CharacterCard({
               preload="metadata"
               className="absolute inset-0 w-full h-full object-cover"
               onError={() => setVideoError(true)}
-              onLoadedData={() => videoRef.current?.play().catch(() => {})}
+              onLoadedData={() => {
+                const v = videoRef.current;
+                if (v?.paused) v.play().catch(() => {});
+              }}
             />
             <button
               type="button"
