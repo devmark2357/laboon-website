@@ -40,7 +40,7 @@ export function MilestoneRewards({ displayCount }: MilestoneRewardsProps) {
       className="py-12 md:py-16 px-4 bg-[#1A1A1A] border border-[#FF6B35]/30 rounded-2xl mx-4 md:mx-auto md:max-w-4xl shadow-[0_0_40px_rgba(255,107,53,0.15)]"
     >
       <h2 className="text-2xl font-bold text-white text-center mb-1">
-        사전예약 보상
+        사전예약 보상 <span className="text-[#FF6B35]">(최대 $10 상당)</span>
       </h2>
       <p className="text-[#888888] text-sm text-center mb-8">
         예약자가 많아질수록 더 큰 혜택!
