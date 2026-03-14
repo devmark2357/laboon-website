@@ -85,7 +85,6 @@ export function PreregForm({
             utm_campaign: utm_campaign || undefined,
           }),
         });
-        const data = await res.json().catch(() => ({}));
 
         if (res.ok) {
           if (typeof window !== 'undefined') {
@@ -119,17 +118,17 @@ export function PreregForm({
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="w-full max-w-lg mx-auto space-y-4">
+      <form onSubmit={handleSubmit} className="w-full max-w-lg mx-auto space-y-3 md:space-y-4">
         {isHero && (
-          <>
-            <p className="text-[#FF6B35] text-sm md:text-base tracking-[0.2em] md:tracking-[0.3em] uppercase font-medium">
-              REAL AI, REAL CONNECTION
+          <div className="space-y-2 md:space-y-3 mb-2">
+            <p className="text-[#FF6B35] text-sm md:text-lg tracking-[0.15em] md:tracking-[0.2em] uppercase font-semibold">
+              Real AI, Real Connection
             </p>
-            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white whitespace-pre-line leading-[1.2] text-left">
-              실제 인플루언서 기반 AI와{'\n'}진짜 같은 연애 시뮬레이션
+            <h1 className="text-[22px] md:text-[36px] lg:text-[42px] font-bold text-white leading-[1.25]">
+              실제 인플루언서 기반 AI와<br />진짜 같은 연애 시뮬레이션
             </h1>
             <p className="text-white/50 text-sm md:text-base">사전예약하고 출시 혜택 받기</p>
-          </>
+          </div>
         )}
 
         <input
@@ -141,7 +140,7 @@ export function PreregForm({
           className="w-full h-12 px-4 text-base rounded-xl bg-white/10 backdrop-blur border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/50 focus:shadow-[0_0_20px_rgba(255,107,53,0.15)] transition-colors"
         />
 
-        <div className="space-y-2 text-xs text-white/60">
+        <div className="space-y-1.5 text-xs text-white/60">
           <label className="flex items-start gap-2 cursor-pointer">
             <input
               type="checkbox"
@@ -202,26 +201,9 @@ export function PreregForm({
         >
           {loading ? (
             <span className="inline-flex items-center gap-2">
-              <svg
-                className="animate-spin h-5 w-5"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                aria-hidden
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                />
+              <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden>
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
               </svg>
               처리 중...
             </span>
@@ -231,7 +213,7 @@ export function PreregForm({
         </button>
 
         {isHero && (
-          <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
             <p className="text-[#FF6B35] text-sm font-medium">
               🔥 현재 {animatedCount.toLocaleString('ko-KR')}명이 사전예약했어요
             </p>

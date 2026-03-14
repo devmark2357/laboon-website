@@ -62,13 +62,16 @@ export function MilestoneRewards({ displayCount }: MilestoneRewardsProps) {
         </div>
       </div>
 
-      <div className="flex md:grid grid-cols-1 md:grid-cols-5 gap-4 mb-8 overflow-x-auto pb-2 md:overflow-visible scrollbar-none" style={{ WebkitOverflowScrolling: 'touch' }}>
+      <div
+        className="flex flex-nowrap md:grid md:grid-cols-5 gap-3 md:gap-4 mb-8 overflow-x-auto pb-2 md:overflow-visible scrollbar-none"
+        style={{ WebkitOverflowScrolling: 'touch' }}
+      >
         {milestones.map((m) => {
           const achieved = displayCount >= m.target;
           return (
             <div
               key={m.target}
-              className={`rounded-xl border p-4 text-center transition-colors ${
+              className={`flex-shrink-0 min-w-[140px] md:min-w-0 rounded-xl border p-4 text-center transition-colors ${
                 achieved
                   ? 'border-[#FF6B35]/50 bg-white/5'
                   : 'border-white/10 bg-white/[0.02]'

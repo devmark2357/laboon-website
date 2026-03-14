@@ -6,19 +6,34 @@ import { features } from '@/lib/prereg-data';
 
 export function FeatureCards() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(2); // Real Event (index 2) 중앙 시작
-  const totalItems = features.length;
+  const [activeIndex, setActiveIndex] = useState(2);
 
-  // 스크롤 위치로 활성 인덱스 감지
+  const getCardMetrics = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return { cardWidth: 300, gap: 16 };
+    const card = el.querySelector('[data-card]') as HTMLElement | null;
+    const cardWidth = card?.offsetWidth || 300;
+    return { cardWidth, gap: 16 };
+  }, []);
+
+  const scrollToIndex = useCallback((index: number, behavior: ScrollBehavior = 'smooth') => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const { cardWidth, gap } = getCardMetrics();
+    const containerWidth = el.offsetWidth;
+    const scrollTo = (cardWidth + gap) * index - (containerWidth - cardWidth) / 2;
+    el.scrollTo({ left: Math.max(0, scrollTo), behavior });
+  }, [getCardMetrics]);
+
   const updateActiveIndex = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
-    const scrollLeft = el.scrollLeft;
-    const cardWidth = el.querySelector('[data-card]')?.clientWidth || 300;
-    const gap = 16;
-    const index = Math.round(scrollLeft / (cardWidth + gap));
-    setActiveIndex(Math.max(0, Math.min(index, totalItems - 1)));
-  }, [totalItems]);
+    const { cardWidth, gap } = getCardMetrics();
+    const containerWidth = el.offsetWidth;
+    const centerOffset = el.scrollLeft + containerWidth / 2;
+    const index = Math.round((centerOffset - cardWidth / 2) / (cardWidth + gap));
+    setActiveIndex(Math.max(0, Math.min(index, features.length - 1)));
+  }, [getCardMetrics]);
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -27,33 +42,20 @@ export function FeatureCards() {
     return () => el.removeEventListener('scroll', updateActiveIndex);
   }, [updateActiveIndex]);
 
-  // 초기 스크롤: Real Event (index 2)를 중앙에
+  // 초기: Real Event(index 2) 중앙
   useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const timer = setTimeout(() => {
-      const card = el.querySelector('[data-card]');
-      if (!card) return;
-      const cardWidth = card.clientWidth;
-      const gap = 16;
-      const containerWidth = el.clientWidth;
-      const scrollTo = (cardWidth + gap) * 2 - (containerWidth - cardWidth) / 2;
-      el.scrollTo({ left: Math.max(0, scrollTo), behavior: 'instant' });
-    }, 100);
+    const timer = setTimeout(() => scrollToIndex(2, 'instant'), 150);
     return () => clearTimeout(timer);
-  }, []);
+  }, [scrollToIndex]);
 
-  // 도트 클릭으로 이동
-  const scrollToIndex = (index: number) => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const card = el.querySelector('[data-card]');
-    if (!card) return;
-    const cardWidth = card.clientWidth;
-    const gap = 16;
-    const containerWidth = el.clientWidth;
-    const scrollTo = (cardWidth + gap) * index - (containerWidth - cardWidth) / 2;
-    el.scrollTo({ left: Math.max(0, scrollTo), behavior: 'smooth' });
+  const goLeft = () => {
+    const next = Math.max(0, activeIndex - 1);
+    scrollToIndex(next);
+  };
+
+  const goRight = () => {
+    const next = Math.min(features.length - 1, activeIndex + 1);
+    scrollToIndex(next);
   };
 
   return (
@@ -62,46 +64,70 @@ export function FeatureCards() {
         Features
       </h2>
 
-      {/* 캐러셀 */}
-      <div
-        ref={scrollRef}
-        className="flex gap-4 overflow-x-auto scrollbar-none px-[calc(50vw-140px)] md:px-[calc(50vw-160px)]"
-        style={{
-          scrollSnapType: 'x mandatory',
-          scrollbarWidth: 'none',
-          WebkitOverflowScrolling: 'touch',
-        }}
-      >
-        {features.map((feature, i) => (
-          <div
-            key={feature.titleEn}
-            data-card
-            className="flex-shrink-0 w-[280px] md:w-[320px] snap-center"
-            style={{ scrollSnapAlign: 'center' }}
-          >
+      <div className="relative">
+        {/* 좌측 화살표 (데스크톱) */}
+        <button
+          type="button"
+          onClick={goLeft}
+          className="hidden md:flex absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 backdrop-blur border border-white/20 text-white items-center justify-center hover:bg-black/80 transition-colors"
+          aria-label="Previous"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+        </button>
+
+        {/* 우측 화살표 (데스크톱) */}
+        <button
+          type="button"
+          onClick={goRight}
+          className="hidden md:flex absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 backdrop-blur border border-white/20 text-white items-center justify-center hover:bg-black/80 transition-colors"
+          aria-label="Next"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+        </button>
+
+        {/* 캐러셀 */}
+        <div
+          ref={scrollRef}
+          className="flex gap-4 overflow-x-auto scrollbar-none"
+          style={{
+            scrollSnapType: 'x mandatory',
+            scrollbarWidth: 'none',
+            WebkitOverflowScrolling: 'touch',
+            paddingLeft: 'calc(50vw - 150px)',
+            paddingRight: 'calc(50vw - 150px)',
+          }}
+        >
+          {features.map((feature, i) => (
             <div
-              className={`relative aspect-[9/16] rounded-2xl overflow-hidden border transition-all duration-500 ${
-                i === activeIndex
-                  ? 'border-[#FF6B35]/40 scale-100 opacity-100'
-                  : 'border-white/10 scale-[0.92] opacity-60'
-              }`}
+              key={feature.titleEn}
+              data-card
+              className="flex-shrink-0 w-[260px] md:w-[300px] snap-center"
+              style={{ scrollSnapAlign: 'center' }}
             >
-              <Image
-                src={feature.image}
-                alt={feature.titleKo}
-                fill
-                sizes="(max-width: 768px) 280px, 320px"
-                className="object-cover"
-                loading="lazy"
-              />
+              <div
+                className={`relative aspect-[9/16] rounded-2xl overflow-hidden border transition-all duration-500 ${
+                  i === activeIndex
+                    ? 'border-[#FF6B35]/40 scale-100 opacity-100 shadow-[0_0_30px_rgba(255,107,53,0.15)]'
+                    : 'border-white/10 scale-[0.88] opacity-50'
+                }`}
+              >
+                <Image
+                  src={feature.image}
+                  alt={feature.titleKo}
+                  fill
+                  sizes="300px"
+                  className="object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <p className={`text-center mt-3 text-sm transition-opacity duration-500 ${
+                i === activeIndex ? 'text-white/70' : 'text-white/25'
+              }`}>
+                {feature.titleKo}
+              </p>
             </div>
-            <p className={`text-center mt-3 text-sm transition-opacity duration-500 ${
-              i === activeIndex ? 'text-white/70' : 'text-white/30'
-            }`}>
-              {feature.titleKo}
-            </p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       {/* 도트 인디케이터 */}
@@ -111,10 +137,10 @@ export function FeatureCards() {
             key={i}
             type="button"
             onClick={() => scrollToIndex(i)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+            className={`h-2 rounded-full transition-all duration-300 ${
               i === activeIndex
                 ? 'bg-[#FF6B35] w-6'
-                : 'bg-white/20 hover:bg-white/40'
+                : 'bg-white/20 w-2 hover:bg-white/40'
             }`}
             aria-label={`Feature ${i + 1}`}
           />
