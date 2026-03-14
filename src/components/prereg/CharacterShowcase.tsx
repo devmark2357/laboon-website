@@ -73,6 +73,7 @@ export function CharacterShowcase({
             onToggle={() => toggle(c.id)}
             unmutedCharacterId={unmutedCharacterId}
             onSoundToggle={setUnmutedCharacterId}
+            isMobileCarousel
             className="flex-shrink-0 w-[75vw] snap-center"
           />
         ))}
@@ -113,6 +114,7 @@ function CharacterCard({
   onToggle,
   unmutedCharacterId,
   onSoundToggle,
+  isMobileCarousel = false,
   className = '',
 }: {
   character: (typeof characters)[0];
@@ -120,26 +122,60 @@ function CharacterCard({
   onToggle: () => void;
   unmutedCharacterId: string | null;
   onSoundToggle: (id: string | null) => void;
+  isMobileCarousel?: boolean;
   className?: string;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [imageError, setImageError] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const [isInView, setIsInView] = useState(!isMobileCarousel);
   const isUnmuted = unmutedCharacterId === character.id;
+
+  // 뷰포트에 보이면 play, 안 보이면 pause (모바일 autoplay 대응)
+  useEffect(() => {
+    const video = videoRef.current;
+    const el = isMobileCarousel ? containerRef.current : videoRef.current;
+    if (!el || !character.video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          if (video) video.play().catch(() => {});
+        } else {
+          if (isMobileCarousel) setIsInView(false);
+          if (video) video.pause();
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [character.video, isMobileCarousel]);
 
   useEffect(() => {
     if (!videoRef.current || !character.video) return;
     videoRef.current.muted = !isUnmuted;
   }, [isUnmuted, character.video]);
 
+  // 구형 iOS webkit-playsinline
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) video.setAttribute('webkit-playsinline', 'true');
+  }, [isInView]);
+
   const toggleMute = () => {
     onSoundToggle(isUnmuted ? null : character.id);
   };
 
   const showVideo = character.video && !videoError;
+  const loadVideo = showVideo && (!isMobileCarousel || isInView);
 
   return (
     <div
+      ref={containerRef}
       className={`relative overflow-hidden rounded-2xl border border-white/10 aspect-[9/16] group transition-transform duration-300 md:hover:scale-[1.03] md:hover:border-[#FF6B35]/40 md:hover:shadow-[0_0_20px_rgba(255,107,53,0.15)] ${className}`}
     >
       <div className="relative aspect-[9/16] w-full rounded-2xl overflow-hidden">
@@ -147,14 +183,16 @@ function CharacterCard({
           <>
             <video
               ref={videoRef}
-              src={character.video}
+              src={loadVideo ? character.video : undefined}
               poster={`/images/characters/${character.id}.png`}
               muted
               loop
               playsInline
               autoPlay
+              preload="metadata"
               className="absolute inset-0 w-full h-full object-cover"
               onError={() => setVideoError(true)}
+              onLoadedData={() => videoRef.current?.play().catch(() => {})}
             />
             <button
               type="button"
