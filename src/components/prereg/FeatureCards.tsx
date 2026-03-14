@@ -7,6 +7,7 @@ import { features } from '@/lib/prereg-data';
 export function FeatureCards() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(2);
+  const [sidePadding, setSidePadding] = useState(0);
   const initialScrollDoneRef = useRef(false);
 
   const getCardMetrics = useCallback(() => {
@@ -42,38 +43,34 @@ export function FeatureCards() {
     return () => el.removeEventListener('scroll', updateActiveIndex);
   }, [updateActiveIndex]);
 
-  // 초기 스크롤: 첫 카드 너비가 0보다 클 때까지 rAF 폴링 후 3번째 카드(Real Event) 중앙 정렬
+  // 캐러셀 좌우 패딩: 컨테이너 너비와 카드 너비로 중앙 정렬되도록 동적 계산
   useEffect(() => {
-    if (initialScrollDoneRef.current) return;
-
-    const MAX_MS = 2000;
-    const start = Date.now();
-    let rafId: number;
-
-    const pollAndScroll = () => {
-      if (initialScrollDoneRef.current) return;
-      if (Date.now() - start > MAX_MS) return;
-
+    const calculate = () => {
       const el = scrollRef.current;
-      const card = el?.querySelector('[data-card]') as HTMLElement | null;
-      if (card?.offsetWidth && card.offsetWidth > 0) {
-        initialScrollDoneRef.current = true;
-        const gap = 16;
-        const containerWidth = el!.offsetWidth;
-        const scrollTo = (card.offsetWidth + gap) * 2 - (containerWidth - card.offsetWidth) / 2;
-        el!.scrollTo({ left: Math.max(0, scrollTo), behavior: 'instant' });
-        return;
-      }
-      rafId = requestAnimationFrame(pollAndScroll);
+      if (!el) return;
+      const card = el.querySelector('[data-card]') as HTMLElement | null;
+      if (!card?.offsetWidth) return;
+      const containerWidth = el.parentElement?.offsetWidth ?? window.innerWidth;
+      const cardWidth = card.offsetWidth;
+      const padding = (containerWidth - cardWidth) / 2;
+      setSidePadding(Math.max(16, padding));
     };
-
-    rafId = requestAnimationFrame(pollAndScroll);
-    const timeoutId = setTimeout(() => cancelAnimationFrame(rafId), MAX_MS);
+    requestAnimationFrame(calculate);
+    const t = setTimeout(calculate, 100);
+    window.addEventListener('resize', calculate);
     return () => {
-      clearTimeout(timeoutId);
-      cancelAnimationFrame(rafId);
+      clearTimeout(t);
+      window.removeEventListener('resize', calculate);
     };
   }, []);
+
+  // sidePadding 적용 후 3번째 카드(Real Event) 중앙 정렬 (최초 1회만)
+  useEffect(() => {
+    if (sidePadding > 0 && !initialScrollDoneRef.current) {
+      initialScrollDoneRef.current = true;
+      requestAnimationFrame(() => scrollToIndex(2, 'instant'));
+    }
+  }, [sidePadding, scrollToIndex]);
 
   // 윈도우 리사이즈 시 재정렬
   useEffect(() => {
@@ -122,8 +119,8 @@ export function FeatureCards() {
             scrollSnapType: 'x mandatory',
             scrollbarWidth: 'none',
             WebkitOverflowScrolling: 'touch',
-            paddingLeft: 'max(16px, calc(50vw - 140px))',
-            paddingRight: 'max(16px, calc(50vw - 140px))',
+            paddingLeft: `${sidePadding}px`,
+            paddingRight: `${sidePadding}px`,
           }}
         >
           {features.map((feature, i) => (
