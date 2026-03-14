@@ -18,6 +18,14 @@ export function CharacterShowcase({
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [unmutedCharacterId, setUnmutedCharacterId] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   const toggle = (id: string) => {
     if (selectedCharacters.includes(id)) {
@@ -55,45 +63,48 @@ export function CharacterShowcase({
         실제 인플루언서 기반 AI 캐릭터
       </p>
 
-      {/* 캐러셀: 모바일 가로 스크롤, 데스크톱 그리드 */}
-      <div
-        ref={scrollRef}
-        className="md:hidden overflow-x-auto snap-x snap-mandatory flex gap-4 pb-4 scrollbar-none"
-        style={{
-          scrollSnapType: 'x mandatory',
-          scrollbarWidth: 'none',
-          WebkitOverflowScrolling: 'touch',
-        }}
-      >
-        {characters.map((c) => (
-          <CharacterCard
-            key={c.id}
-            character={c}
-            selected={selectedCharacters.includes(c.id)}
-            onToggle={() => toggle(c.id)}
-            unmutedCharacterId={unmutedCharacterId}
-            onSoundToggle={setUnmutedCharacterId}
-            isMobileCarousel
-            className="flex-shrink-0 w-[75vw] snap-center"
-          />
-        ))}
-      </div>
-
-      <div className="hidden md:grid grid-cols-4 gap-4 max-w-5xl mx-auto">
-        {characters.map((c) => (
-          <CharacterCard
-            key={c.id}
-            character={c}
-            selected={selectedCharacters.includes(c.id)}
-            onToggle={() => toggle(c.id)}
-            unmutedCharacterId={unmutedCharacterId}
-            onSoundToggle={setUnmutedCharacterId}
-          />
-        ))}
-      </div>
+      {/* 캐러셀(모바일) / 그리드(데스크톱) — 한쪽만 렌더해 video 중복 재생 방지 */}
+      {isMobile ? (
+        <div
+          ref={scrollRef}
+          className="overflow-x-auto snap-x snap-mandatory flex gap-4 pb-4 scrollbar-none"
+          style={{
+            scrollSnapType: 'x mandatory',
+            scrollbarWidth: 'none',
+            WebkitOverflowScrolling: 'touch',
+          }}
+        >
+          {characters.map((c) => (
+            <CharacterCard
+              key={c.id}
+              character={c}
+              selected={selectedCharacters.includes(c.id)}
+              onToggle={() => toggle(c.id)}
+              unmutedCharacterId={unmutedCharacterId}
+              onSoundToggle={setUnmutedCharacterId}
+              isMobileCarousel
+              className="flex-shrink-0 w-[75vw] snap-center"
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-4 gap-4 max-w-5xl mx-auto">
+          {characters.map((c) => (
+            <CharacterCard
+              key={c.id}
+              character={c}
+              selected={selectedCharacters.includes(c.id)}
+              onToggle={() => toggle(c.id)}
+              unmutedCharacterId={unmutedCharacterId}
+              onSoundToggle={setUnmutedCharacterId}
+            />
+          ))}
+        </div>
+      )}
 
       {/* 도트 인디케이터 (모바일만) */}
-      <div className="flex justify-center gap-2 mt-6 md:hidden">
+      {isMobile && (
+      <div className="flex justify-center gap-2 mt-6">
         {characters.map((_, i) => (
           <div
             key={i}
@@ -104,6 +115,7 @@ export function CharacterShowcase({
           />
         ))}
       </div>
+      )}
     </section>
   );
 }
@@ -158,12 +170,15 @@ function CharacterCard({
     return () => observer.disconnect();
   }, [character.video, isMobileCarousel]);
 
-  // mute/unmute 동기화 — unmute 시 처음부터 재생해 음성·영상 싱크
+  // mute/unmute 동기화 — unmute 시 다른 모든 video mute 후 처음부터 재생
   useEffect(() => {
     const video = videoRef.current;
     if (!video || !character.video) return;
     video.muted = !isUnmuted;
     if (isUnmuted) {
+      document.querySelectorAll('video').forEach((v) => {
+        if (v !== video) v.muted = true;
+      });
       video.currentTime = 0;
       video.play().catch(() => {});
     }
