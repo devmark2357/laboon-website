@@ -29,7 +29,7 @@ export function HeroWithForm({
   return (
     <section className="relative min-h-[100dvh] overflow-hidden bg-[#0A0A0A]">
 
-      {/* 배경: 모바일 */}
+      {/* 배경: 모바일 — 캐릭터 중앙 */}
       <div className="absolute inset-0 md:hidden">
         <Image
           src="/images/prereg/hero-mobile.png"
@@ -86,16 +86,32 @@ export function HeroWithForm({
       {/* 콘텐츠 */}
       <div className="relative z-10 min-h-[100dvh] flex flex-col">
 
-        {/* 로고 — 크게 */}
+        {/* 로고 — 강제 크기 지정 */}
         <div className="shrink-0 pt-8 md:pt-10 px-6 md:px-14 lg:px-20">
-          <Image
-            src="/images/prereg/realmate_logo_W.png"
-            alt="Realmate"
-            width={320}
-            height={70}
-            className="h-10 sm:h-12 md:h-16 lg:h-[72px] w-auto"
-            priority
-          />
+          {/* 모바일 로고 */}
+          <div className="md:hidden">
+            <Image
+              src="/images/prereg/realmate_logo_W.png"
+              alt="Realmate"
+              width={500}
+              height={110}
+              style={{ width: '160px', height: 'auto' }}
+              priority
+              unoptimized
+            />
+          </div>
+          {/* 데스크톱 로고 */}
+          <div className="hidden md:block">
+            <Image
+              src="/images/prereg/realmate_logo_W.png"
+              alt="Realmate"
+              width={500}
+              height={110}
+              style={{ width: '280px', height: 'auto' }}
+              priority
+              unoptimized
+            />
+          </div>
         </div>
 
         {/* 데스크톱 */}
@@ -111,7 +127,7 @@ export function HeroWithForm({
           </div>
         </div>
 
-        {/* 모바일 */}
+        {/* 모바일 — 텍스트/폼 중앙 정렬 */}
         <div className="md:hidden flex flex-col flex-1">
           <div className="flex-1 min-h-[100px]" />
           <div className="px-5 pb-[max(1.25rem,env(safe-area-inset-bottom,0px))]">
