@@ -7,6 +7,7 @@ import { features } from '@/lib/prereg-data';
 export function FeatureCards() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(2);
+  const [initialized, setInitialized] = useState(false);
 
   const getCardMetrics = useCallback(() => {
     const el = scrollRef.current;
@@ -41,11 +42,26 @@ export function FeatureCards() {
     return () => el.removeEventListener('scroll', updateActiveIndex);
   }, [updateActiveIndex]);
 
-  // 초기: 3번째(Real Event, index 2) 중앙 — 모바일/데스크톱 모두
+  // 초기 중앙 스크롤 — 여러 번 시도해서 확실하게
   useEffect(() => {
-    const timer = setTimeout(() => scrollToIndex(2, 'instant'), 200);
-    return () => clearTimeout(timer);
-  }, [scrollToIndex]);
+    const attempts = [100, 300, 600, 1000];
+    const timers = attempts.map((delay) =>
+      setTimeout(() => {
+        if (!initialized) {
+          scrollToIndex(2, 'instant');
+          setInitialized(true);
+        }
+      }, delay)
+    );
+    return () => timers.forEach(clearTimeout);
+  }, [scrollToIndex, initialized]);
+
+  // 윈도우 리사이즈 시 재정렬
+  useEffect(() => {
+    const handleResize = () => scrollToIndex(activeIndex, 'instant');
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [scrollToIndex, activeIndex]);
 
   const goLeft = () => scrollToIndex(Math.max(0, activeIndex - 1));
   const goRight = () => scrollToIndex(Math.min(features.length - 1, activeIndex + 1));
@@ -56,26 +72,30 @@ export function FeatureCards() {
 
       <div className="relative">
         {/* 좌측 화살표 */}
-        <button
-          type="button"
-          onClick={goLeft}
-          className="hidden md:flex absolute left-4 lg:left-8 top-[45%] -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 backdrop-blur border border-white/20 text-white items-center justify-center hover:bg-black/80 transition-colors"
-          aria-label="Previous"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
-        </button>
+        {activeIndex > 0 && (
+          <button
+            type="button"
+            onClick={goLeft}
+            className="hidden md:flex absolute left-4 lg:left-8 top-[45%] -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 backdrop-blur border border-white/20 text-white items-center justify-center hover:bg-black/80 transition-colors"
+            aria-label="Previous"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+          </button>
+        )}
 
         {/* 우측 화살표 */}
-        <button
-          type="button"
-          onClick={goRight}
-          className="hidden md:flex absolute right-4 lg:right-8 top-[45%] -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 backdrop-blur border border-white/20 text-white items-center justify-center hover:bg-black/80 transition-colors"
-          aria-label="Next"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
-        </button>
+        {activeIndex < features.length - 1 && (
+          <button
+            type="button"
+            onClick={goRight}
+            className="hidden md:flex absolute right-4 lg:right-8 top-[45%] -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 backdrop-blur border border-white/20 text-white items-center justify-center hover:bg-black/80 transition-colors"
+            aria-label="Next"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+          </button>
+        )}
 
-        {/* 캐러셀 — 중앙 정렬 패딩 */}
+        {/* 캐러셀 */}
         <div
           ref={scrollRef}
           className="flex gap-4 overflow-x-auto scrollbar-none"
@@ -95,11 +115,12 @@ export function FeatureCards() {
               style={{ scrollSnapAlign: 'center' }}
             >
               <div
-                className={`relative aspect-[9/16] rounded-2xl overflow-hidden border transition-all duration-500 ${
+                className={`relative aspect-[9/16] rounded-2xl overflow-hidden border transition-all duration-500 cursor-pointer ${
                   i === activeIndex
                     ? 'border-[#FF6B35]/40 scale-100 opacity-100 shadow-[0_0_30px_rgba(255,107,53,0.15)]'
                     : 'border-white/10 scale-[0.88] opacity-50'
                 }`}
+                onClick={() => scrollToIndex(i)}
               >
                 <Image
                   src={feature.image}

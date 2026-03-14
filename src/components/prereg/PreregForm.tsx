@@ -89,7 +89,6 @@ export function PreregForm({
         if (res.ok) {
           if (typeof window !== 'undefined') {
             localStorage.setItem('prereg_done', 'true');
-            window.fbq?.('track', 'CompleteRegistration');
           }
           onSuccess();
           return;
@@ -121,7 +120,7 @@ export function PreregForm({
     <>
       <form onSubmit={handleSubmit} className="w-full max-w-lg mx-auto space-y-3 md:space-y-4">
         {isHero && (
-          <div className="space-y-2 md:space-y-3 mb-2 text-center md:text-left">
+          <div className="space-y-2 md:space-y-3 mb-2 text-left">
             <p className="text-[#FF6B35] text-sm md:text-lg tracking-[0.15em] md:tracking-[0.2em] uppercase font-semibold">
               Real AI, Real Connection
             </p>

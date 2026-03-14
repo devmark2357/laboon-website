@@ -29,7 +29,7 @@ export function HeroWithForm({
   return (
     <section className="relative min-h-[100dvh] overflow-hidden bg-[#0A0A0A]">
 
-      {/* 배경: 모바일 — 캐릭터 중앙 */}
+      {/* 배경: 모바일 — 캐릭터 중앙 맞춤 */}
       <div className="absolute inset-0 md:hidden">
         <Image
           src="/images/prereg/hero-mobile.png"
@@ -37,7 +37,7 @@ export function HeroWithForm({
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[center_15%]"
+          className="object-cover object-center"
           quality={85}
         />
         <div
@@ -49,7 +49,7 @@ export function HeroWithForm({
         />
       </div>
 
-      {/* 배경: 데스크톱 */}
+      {/* 배경: 데스크톱 — 캐릭터 우측 */}
       <div className="absolute inset-0 hidden md:block">
         <Image
           src="/images/prereg/hero-desktop.png"
@@ -86,9 +86,8 @@ export function HeroWithForm({
       {/* 콘텐츠 */}
       <div className="relative z-10 min-h-[100dvh] flex flex-col">
 
-        {/* 로고 — 강제 크기 지정 */}
+        {/* 로고 */}
         <div className="shrink-0 pt-8 md:pt-10 px-6 md:px-14 lg:px-20">
-          {/* 모바일 로고 */}
           <div className="md:hidden">
             <Image
               src="/images/prereg/realmate_logo_W.png"
@@ -100,7 +99,6 @@ export function HeroWithForm({
               unoptimized
             />
           </div>
-          {/* 데스크톱 로고 */}
           <div className="hidden md:block">
             <Image
               src="/images/prereg/realmate_logo_W.png"
@@ -114,7 +112,7 @@ export function HeroWithForm({
           </div>
         </div>
 
-        {/* 데스크톱 */}
+        {/* 데스크톱: 좌측 폼 */}
         <div className="hidden md:flex flex-1 items-center px-14 lg:px-20 xl:px-28">
           <div className="w-full max-w-[480px]">
             <PreregForm
@@ -127,7 +125,7 @@ export function HeroWithForm({
           </div>
         </div>
 
-        {/* 모바일 — 텍스트/폼 중앙 정렬 */}
+        {/* 모바일: 하단 폼, 텍스트 좌측 정렬 */}
         <div className="md:hidden flex flex-col flex-1">
           <div className="flex-1 min-h-[100px]" />
           <div className="px-5 pb-[max(1.25rem,env(safe-area-inset-bottom,0px))]">
