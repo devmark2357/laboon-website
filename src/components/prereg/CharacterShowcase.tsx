@@ -17,6 +17,7 @@ export function CharacterShowcase({
 }: CharacterShowcaseProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [unmutedCharacterId, setUnmutedCharacterId] = useState<string | null>(null);
 
   const toggle = (id: string) => {
     if (selectedCharacters.includes(id)) {
@@ -70,6 +71,8 @@ export function CharacterShowcase({
             character={c}
             selected={selectedCharacters.includes(c.id)}
             onToggle={() => toggle(c.id)}
+            unmutedCharacterId={unmutedCharacterId}
+            onSoundToggle={setUnmutedCharacterId}
             className="flex-shrink-0 w-[75vw] snap-center"
           />
         ))}
@@ -82,6 +85,8 @@ export function CharacterShowcase({
             character={c}
             selected={selectedCharacters.includes(c.id)}
             onToggle={() => toggle(c.id)}
+            unmutedCharacterId={unmutedCharacterId}
+            onSoundToggle={setUnmutedCharacterId}
           />
         ))}
       </div>
@@ -106,33 +111,87 @@ function CharacterCard({
   character,
   selected,
   onToggle,
+  unmutedCharacterId,
+  onSoundToggle,
   className = '',
 }: {
   character: (typeof characters)[0];
   selected: boolean;
   onToggle: () => void;
+  unmutedCharacterId: string | null;
+  onSoundToggle: (id: string | null) => void;
   className?: string;
 }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [imageError, setImageError] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+  const isUnmuted = unmutedCharacterId === character.id;
+
+  useEffect(() => {
+    if (!videoRef.current || !character.video) return;
+    videoRef.current.muted = !isUnmuted;
+  }, [isUnmuted, character.video]);
+
+  const toggleMute = () => {
+    onSoundToggle(isUnmuted ? null : character.id);
+  };
+
+  const showVideo = character.video && !videoError;
+
   return (
     <div
       className={`relative overflow-hidden rounded-2xl border border-white/10 aspect-[9/16] group transition-transform duration-300 md:hover:scale-[1.03] md:hover:border-[#FF6B35]/40 md:hover:shadow-[0_0_20px_rgba(255,107,53,0.15)] ${className}`}
     >
-      {imageError ? (
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-800 to-gray-900 flex items-center justify-center">
-          <span className="text-white font-bold text-lg">{character.name}</span>
-        </div>
-      ) : (
-        <Image
-          src={`/images/characters/${character.id}.png`}
-          alt={character.name}
-          fill
-          sizes="(max-width: 768px) 75vw, 25vw"
-          className="object-cover"
-          onError={() => setImageError(true)}
-        />
-      )}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+      <div className="relative aspect-[9/16] w-full rounded-2xl overflow-hidden">
+        {showVideo ? (
+          <>
+            <video
+              ref={videoRef}
+              src={character.video}
+              poster={`/images/characters/${character.id}.png`}
+              muted
+              loop
+              playsInline
+              autoPlay
+              className="absolute inset-0 w-full h-full object-cover"
+              onError={() => setVideoError(true)}
+            />
+            <button
+              type="button"
+              onClick={toggleMute}
+              className="absolute top-3 right-3 z-10 bg-black/50 backdrop-blur-sm rounded-full px-2.5 py-1.5 flex items-center gap-1.5 text-white"
+              aria-label={isUnmuted ? '음소거' : '소리 켜기'}
+            >
+              <span className="text-xs">{isUnmuted ? '🔊' : '🔇'}</span>
+              {!isUnmuted && (
+                <div className="flex items-end gap-[2px] h-3">
+                  <div className="sound-wave-bar" />
+                  <div className="sound-wave-bar" />
+                  <div className="sound-wave-bar" />
+                </div>
+              )}
+            </button>
+          </>
+        ) : (
+          <>
+            {imageError ? (
+              <div className="absolute inset-0 bg-gradient-to-b from-gray-800 to-gray-900 flex items-center justify-center">
+                <span className="text-white font-bold text-lg">{character.name}</span>
+              </div>
+            ) : (
+              <Image
+                src={`/images/characters/${character.id}.png`}
+                alt={character.name}
+                fill
+                sizes="(max-width: 768px) 75vw, 25vw"
+                className="object-cover"
+                onError={() => setImageError(true)}
+              />
+            )}
+          </>
+        )}
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
       <div className="absolute bottom-0 left-0 right-0 p-4">
         <p className="text-white text-xl font-bold">{character.name}</p>
         <p className="text-white/60 text-sm">{character.nameEn}</p>

@@ -4,22 +4,17 @@ export interface Character {
   nameEn: string;
   tags: string[];
   bio: string;
+  video?: string;
 }
 
 export const characters: Character[] = [
-  {
-    id: 'kisa',
-    name: '키사',
-    nameEn: 'Kisa',
-    tags: ['애교', '질투', '미스터리'],
-    bio: '강남 모델, 귀엽고 애교 많지만 질투심 강한 소유욕의 여자',
-  },
   {
     id: 'jiyeon',
     name: '지연',
     nameEn: 'Jiyeon',
     tags: ['도도한', '시크', 'ISTP'],
     bio: '목공 작업실 겸 위스키 바 운영, 쉽게 마음 열지 않는 시크한 여자',
+    video: 'https://uahjovtartkezsntoxuf.supabase.co/storage/v1/object/public/realmate_media/realmate/generated/videos/cf224fce-1d96-4f0d-96f1-25cfc5609cc5.mp4',
   },
   {
     id: 'hanabi',
@@ -27,6 +22,7 @@ export const characters: Character[] = [
     nameEn: 'Hanabi',
     tags: ['직진형', '반전매력', '쿨한'],
     bio: '레이싱 모델, 겉은 차갑지만 알수록 순수한 직진형 여자',
+    video: 'https://uahjovtartkezsntoxuf.supabase.co/storage/v1/object/public/realmate_media/realmate/generated/videos/c6958669-8504-4498-9a13-73cdbe9a1225.mp4',
   },
   {
     id: 'eunbi',
@@ -34,6 +30,7 @@ export const characters: Character[] = [
     nameEn: 'Eunbi',
     tags: ['ENFP', '책벌레', '감성적'],
     bio: '북촌 도서관 사서, 책 속에 사는 감성적인 ENFP 소녀',
+    video: 'https://uahjovtartkezsntoxuf.supabase.co/storage/v1/object/public/realmate_media/realmate/generated/videos/d5062ea7-8866-4fc5-9164-a3e7a13f00e9.mp4',
   },
   {
     id: 'rina',
@@ -41,6 +38,7 @@ export const characters: Character[] = [
     nameEn: 'Rina',
     tags: ['여우형', '솔직', '배려'],
     bio: '청담동 모델, 화려한 겉모습 뒤에 여린 속마음을 가진 여우형 매력',
+    video: 'https://uahjovtartkezsntoxuf.supabase.co/storage/v1/object/public/realmate_media/realmate/generated/videos/58581067-5f77-41e8-bd30-9abd1ddc037c.mp4',
   },
   {
     id: 'hayun',
@@ -48,6 +46,7 @@ export const characters: Character[] = [
     nameEn: 'Hayun',
     tags: ['자유로운', '서핑', '캠핑'],
     bio: '양양 바다 여행 크리에이터, 카메라 뒤의 진짜 모습이 궁금해',
+    video: 'https://uahjovtartkezsntoxuf.supabase.co/storage/v1/object/public/realmate_media/realmate/generated/videos/a54ca822-88a8-481a-85cd-e0054a707a7c.mp4',
   },
   {
     id: 'youndin',
@@ -55,6 +54,7 @@ export const characters: Character[] = [
     nameEn: 'Youndin',
     tags: ['INFP', '순수', '외유내강'],
     bio: '수원 대학생 모델, 순수하고 귀엽지만 속은 단단한 외유내강 소녀',
+    video: 'https://uahjovtartkezsntoxuf.supabase.co/storage/v1/object/public/realmate_media/realmate/generated/videos/7d8df2e1-8bcd-494a-9fed-a218a7462484.mp4',
   },
   {
     id: 'subin',
@@ -62,6 +62,15 @@ export const characters: Character[] = [
     nameEn: 'Subin',
     tags: ['INFP', '수줍은', '순수'],
     bio: '망원동 문구 디자이너, 수줍어서 먼저 말 못하지만 스케치북엔 네 이야기뿐',
+    video: 'https://uahjovtartkezsntoxuf.supabase.co/storage/v1/object/public/realmate_media/realmate/generated/videos/e252c746-c9eb-4042-8936-b8fe6fb1d6dd.mp4',
+  },
+  {
+    id: 'kisa',
+    name: '키사',
+    nameEn: 'Kisa',
+    tags: ['애교', '질투', '미스터리'],
+    bio: '강남 모델, 귀엽고 애교 많지만 질투심 강한 소유욕의 여자',
+    video: 'https://uahjovtartkezsntoxuf.supabase.co/storage/v1/object/public/realmate_media/realmate/generated/videos/419998de-8a86-4831-8003-0b619a91739b.mp4',
   },
 ];
 

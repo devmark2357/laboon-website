@@ -202,6 +202,26 @@
   .prereg-scroll-bounce {
     animation: bounce 2s ease infinite;
   }
+
+  @keyframes sound-wave {
+    0%, 100% { height: 4px; }
+    50% { height: 12px; }
+  }
+  .sound-wave-bar {
+    width: 2px;
+    background: #FF6B35;
+    border-radius: 1px;
+    animation: sound-wave 1s ease-in-out infinite;
+  }
+  .sound-wave-bar:nth-child(1) { animation-delay: 0s; }
+  .sound-wave-bar:nth-child(2) { animation-delay: 0.15s; }
+  .sound-wave-bar:nth-child(3) { animation-delay: 0.3s; }
+}
+
+.sound-wave-bar {
+  width: 2px;
+  background: #FF6B35;
+  border-radius: 1px;
 }
 @media (prefers-reduced-motion: reduce) {
   .prereg-cta-heartbeat,
@@ -210,5 +230,9 @@
   .prereg-milestone-check-pulse,
   .prereg-scroll-bounce {
     animation: none !important;
+  }
+  .sound-wave-bar {
+    animation: none !important;
+    height: 6px !important;
   }
 }

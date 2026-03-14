@@ -37,7 +37,8 @@ export function HeroWithForm({
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center"
+          className="object-cover"
+          style={{ objectPosition: '60% 15%' }}
           quality={85}
         />
         <div
