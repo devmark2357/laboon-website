@@ -158,9 +158,15 @@ function CharacterCard({
     return () => observer.disconnect();
   }, [character.video, isMobileCarousel]);
 
+  // mute/unmute 동기화 — unmute 시 처음부터 재생해 음성·영상 싱크
   useEffect(() => {
-    if (!videoRef.current || !character.video) return;
-    videoRef.current.muted = !isUnmuted;
+    const video = videoRef.current;
+    if (!video || !character.video) return;
+    video.muted = !isUnmuted;
+    if (isUnmuted) {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+    }
   }, [isUnmuted, character.video]);
 
   // 구형 iOS webkit-playsinline
